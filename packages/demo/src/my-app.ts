@@ -1,4 +1,4 @@
-import { IAppConfiguration } from '@starnet/au2-configuration';
+import { IAppConfiguration } from '@starnetbih/au2-configuration';
 
 export class MyApp {
   constructor(@IAppConfiguration private Configuration: IAppConfiguration) { }

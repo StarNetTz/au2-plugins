@@ -1,5 +1,5 @@
 {
-  "name": "@starnet/au2-configuration",
+  "name": "@starnetbih/au2-configuration",
   "description": "Application settings plugin for aurelia 2 (aplha - not stable)",
   "main": "dist/index.js",
   "files": [

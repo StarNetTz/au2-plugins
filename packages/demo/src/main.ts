@@ -1,6 +1,6 @@
 import {Aurelia, Registration, AppTask}  from 'aurelia';
 import { MyApp } from './my-app';
-import { AppConfigurationPlugin } from '@starnet/au2-configuration';
+import { AppConfigurationPlugin } from '@starnetbih/au2-configuration';
 
 Aurelia
 .register(

@@ -1,5 +1,5 @@
 {
-  "name": "@starnet/demo",
+  "name": "@starnetbih/demo",
   "description": "An Aurelia plugin test application",
   "version": "0.1.0",
   "repository": {
@@ -8,7 +8,7 @@
   },
   "license": "UNLICENSED",
   "dependencies": {
-    "@starnet/au2-configuration": "0.1.0",
+    "@starnetbih/au2-configuration": "0.1.0",
     "aurelia": "latest"
   },
   "devDependencies": {

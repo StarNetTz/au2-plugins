@@ -1,5 +1,5 @@
 {
-	"name": "starnet",
+	"name": "starnetbih",
 	"private": true,
 	"workspaces": [
 	  "packages/**"
