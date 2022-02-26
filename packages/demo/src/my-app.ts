@@ -1,8 +1,7 @@
 import { IAppConfiguration } from '@starnet/au2-configuration';
 
 export class MyApp {
-  constructor(@IAppConfiguration private Configuration: IAppConfiguration) {
-  }
+  constructor(@IAppConfiguration private Configuration: IAppConfiguration) { }
 
   async attached() {
     console.log(await this.Configuration.get('url'));
