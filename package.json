@@ -1,0 +1,10 @@
+{
+	"name": "starnet",
+	"private": true,
+	"workspaces": [
+	  "packages/**"
+	],
+	"scripts": {
+	  "start": "npm run --prefix packages/demo start"
+	}
+  }
