@@ -1,6 +1,15 @@
 {
-	"url":"http://google.ba",
-	"ab":{
-		"x":3
+	"url": "http://google.ba",
+	"ab": {
+		"x": 3
+	},
+	"au2-configuration": {
+		"lookupsApi": {
+			"url": "https://api.daas.selfip.net",
+			"auth": true
+		},
+		"googleApi": {
+			"url": "https://google.ba"
+		}
 	}
 }

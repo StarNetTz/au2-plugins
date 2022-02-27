@@ -1,4 +1,4 @@
-import { IHttpClient, HttpClient, HttpClientConfiguration } from '@aurelia/fetch-client';
+import { HttpClient, HttpClientConfiguration } from '@aurelia/fetch-client';
 import {Rest} from './Rest';
 import {IContainer, Registration, DI } from '@aurelia/kernel';
 import { AppTask } from '@aurelia/runtime-html';
@@ -12,6 +12,7 @@ export interface RestOptions {
 	 * @type {boolean}
 	 */
 	useTraditionalUriTemplates?: boolean;
+	shouldAuthenticate?: boolean;
   }
 
   /**
