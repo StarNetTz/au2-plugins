@@ -1,39 +1,35 @@
-import { Aurelia, Registration, AppTask, IContainer } from 'aurelia';
+import { Aurelia, Registration, AppTask, IContainer} from 'aurelia';
 import { MyApp } from './my-app';
-import { AppConfigurationPlugin } from '@starnetbih/au2-configuration';
+import { AppConfigurationPlugin, IAppConfiguration } from '@starnetbih/au2-configuration';
 import { ApiPlugin, IApiRegistry, Rest, RestOptions } from '@starnetbih/au2-api';
 import { AureliaAuthConfiguration, IAuthConfigOptions, Authentication } from '@starnetbih/au2-auth';
 
 
 const xx = { baseUrl: 'http://localhost:5005', responseTokenProp: 'bearerToken' };
-console.log(xx);
+let cnf : IAppConfiguration;
 Aurelia
   .register(
+    AppTask.beforeCreate(IContainer, async container => {
+     console.log("before create");
+    }),
+    AppTask.hydrating(IContainer, async container => {
+      console.log("hydrating");
+     }),
+     AppTask.hydrated(IContainer, async container => {
+      console.log("hydrating");
+     }),
+    AureliaAuthConfiguration.configure(<IAuthConfigOptions>xx),
     AppConfigurationPlugin.customize(
       settings => {
+        console.log("conf");
         settings.Dir = "config"
         settings.File = "config.json"
       }),
-    ApiPlugin.customize(
+    ApiPlugin.configure(
       (reg) => {
-        reg.registerEndpoint('lookupsApi', 'https://api.daas.selfip.net');
-        reg.registerEndpoint('googleApi', 'https://www.cbbh.ba');
-      }),
-    AureliaAuthConfiguration.configure(<IAuthConfigOptions>xx),
-    AppTask.beforeActivate(IContainer, async container => {
-
-      let aut = container.get(Authentication);
-      let api = container.get(IApiRegistry);
-
-      var eps = api.endpoints;
-
-      for (let key of Object.keys(eps)) {
-        let rst = eps[key] as Rest;
-        rst.addInterceptor(aut.tokenInterceptor);
-
-      }
-
-      console.log('Before activate app1');
-    })
+        //reg done in api beforeActivate hoo, from config.
+        //reg.registerEndpoint('lookupsApi', 'https://api.daas.selfip.net');
+        //reg.registerEndpoint('googleApi', 'https://www.cbbh.ba');
+      })
   ).app(MyApp)
   .start();

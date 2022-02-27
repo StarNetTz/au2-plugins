@@ -19,7 +19,7 @@ export class AppConfiguration implements IAppConfiguration {
 	public static register(container: IContainer): void {
 		container.register(Registration.singleton(IAppConfiguration, this));
 		container.register(
-			AppTask.beforeActivate(IAppConfiguration, async plugin => {
+			AppTask.beforeCreate(IAppConfiguration, async plugin => {
 				await plugin.init();
 			}));
 	}

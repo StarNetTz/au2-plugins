@@ -13,6 +13,8 @@
   "license": "UNLICENSED",
   "dependencies": {
     "aurelia": "latest",
+    "@starnetbih/au2-configuration": "0.1.0",
+    "@starnetbih/au2-auth": "0.1.0",
     "extend": "^3.0.2"
   },
   "devDependencies": {

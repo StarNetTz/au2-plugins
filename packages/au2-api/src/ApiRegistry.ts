@@ -1,7 +1,10 @@
 import { HttpClient, HttpClientConfiguration } from '@aurelia/fetch-client';
-import {Rest} from './Rest';
-import {IContainer, Registration, DI } from '@aurelia/kernel';
+import { Rest } from './Rest';
+import { IContainer, Registration, DI } from '@aurelia/kernel';
 import { AppTask } from '@aurelia/runtime-html';
+import { IAppConfiguration } from '@starnetbih/au2-configuration';
+import { Authentication } from '@starnetbih/au2-auth';
+
 
 export interface RestOptions {
 	/**
@@ -13,20 +16,20 @@ export interface RestOptions {
 	 */
 	useTraditionalUriTemplates?: boolean;
 	shouldAuthenticate?: boolean;
-  }
+}
 
-  /**
- * Config class. Configures and stores endpoints
- */
-export interface IApiRegistry{
-	registerEndpoint(name: string, configureMethod?: string|Function, defaults?: {}, restOptions?: RestOptions): IApiRegistry;
+/**
+* Config class. Configures and stores endpoints
+*/
+export interface IApiRegistry {
+	registerEndpoint(name: string, configureMethod?: string | Function, defaults?: {}, restOptions?: RestOptions): IApiRegistry;
 	getEndpoint(name?: string): Rest;
 	endpointExists(name: string): boolean;
 	setDefaultEndpoint(name: string): IApiRegistry;
 	setDefaultBaseUrl(baseUrl: string): IApiRegistry;
-	configure(config: {defaultEndpoint: string, defaultBaseUrl: string, endpoints: Array<{name: string, endpoint: string, config: {}, default: boolean}>}): IApiRegistry;
+	configure(config: { defaultEndpoint: string, defaultBaseUrl: string, endpoints: Array<{ name: string, endpoint: string, config: {}, default: boolean }> }): IApiRegistry;
 	init(): void | Promise<any>;
-	endpoints: {[key: string]: Rest};
+	endpoints: { [key: string]: Rest };
 	defaultEndpoint: Rest;
 	defaultBaseUrl: string;
 }
@@ -39,22 +42,22 @@ export class ApiRegistry implements IApiRegistry {
 	 *
 	 * @param {{}} Key: endpoint name; value: Rest client
 	 */
-	endpoints: {[key: string]: Rest} = {};
-  
+	endpoints: { [key: string]: Rest } = {};
+
 	/**
 	 * Current default endpoint if set
 	 *
 	 * @param {Rest} defaultEndpoint The Rest client
 	 */
 	defaultEndpoint: Rest;
-  
-	 /**
-	  * Current default baseUrl if set
-	  *
-	  * @param {string} defaultBaseUrl The Rest client
-	  */
+
+	/**
+	 * Current default baseUrl if set
+	 *
+	 * @param {string} defaultBaseUrl The Rest client
+	 */
 	defaultBaseUrl: string;
-  
+
 	/**
 	 * Register a new endpoint.
 	 *
@@ -67,57 +70,56 @@ export class ApiRegistry implements IApiRegistry {
 	 * @return {ApiRegistry} this Fluent interface
 	 * @chainable
 	 */
-	registerEndpoint(name: string, configureMethod?: string|Function, defaults?: {}, restOptions?: RestOptions): IApiRegistry {
-	  let newClient = new HttpClient();
-	  let useTraditionalUriTemplates;
-  
-	  if (restOptions !== undefined) {
-		useTraditionalUriTemplates = restOptions.useTraditionalUriTemplates;
-	  }
-	  this.endpoints[name] = new Rest(newClient, name, useTraditionalUriTemplates);
-  
-	  // set custom defaults to Rest
-	  if (defaults !== undefined) {
-		this.endpoints[name].defaults = defaults;
-	  }
-  
-	  // Manual configure of client.
-	  if (typeof configureMethod === 'function') {
-		newClient.configure(
-			(newClientConfig: HttpClientConfiguration) => {
-			  return configureMethod(
-				  newClientConfig.withDefaults(this.endpoints[name].defaults)
-			  );
-			}
-		);
-  
-		// transfer user defaults from http-client to endpoint
-		this.endpoints[name].defaults = newClient.defaults;
-  		console.log(this.endpoints[name]);
-		return this;
-	  }
-  
-	  // Base url is self / current host.
-	  if (typeof configureMethod !== 'string' && !this.defaultBaseUrl) {
-		return this;
-	  }
-  
-	  if (this.defaultBaseUrl && typeof configureMethod !== 'string' && typeof configureMethod !== 'function') {
+	registerEndpoint(name: string, configureMethod?: string | Function, defaults?: {}, restOptions?: RestOptions): IApiRegistry {
+		let newClient = new HttpClient();
+		let useTraditionalUriTemplates;
+
+		if (restOptions !== undefined) {
+			useTraditionalUriTemplates = restOptions.useTraditionalUriTemplates;
+		}
+		this.endpoints[name] = new Rest(newClient, name, useTraditionalUriTemplates);
+
+		// set custom defaults to Rest
+		if (defaults !== undefined) {
+			this.endpoints[name].defaults = defaults;
+		}
+
+		// Manual configure of client.
+		if (typeof configureMethod === 'function') {
+			newClient.configure(
+				(newClientConfig: HttpClientConfiguration) => {
+					return configureMethod(
+						newClientConfig.withDefaults(this.endpoints[name].defaults)
+					);
+				}
+			);
+
+			// transfer user defaults from http-client to endpoint
+			this.endpoints[name].defaults = newClient.defaults;
+			return this;
+		}
+
+		// Base url is self / current host.
+		if (typeof configureMethod !== 'string' && !this.defaultBaseUrl) {
+			return this;
+		}
+
+		if (this.defaultBaseUrl && typeof configureMethod !== 'string' && typeof configureMethod !== 'function') {
+			newClient.configure(configure => {
+				return configure.withBaseUrl(this.defaultBaseUrl);
+			});
+
+			return this;
+		}
+
+		// Base url is string. Configure.
 		newClient.configure(configure => {
-		  return configure.withBaseUrl(this.defaultBaseUrl);
+			return configure.withBaseUrl(configureMethod);
 		});
-  
+
 		return this;
-	  }
-  
-	  // Base url is string. Configure.
-	  newClient.configure(configure => {
-		return configure.withBaseUrl(configureMethod);
-	  });
-  
-	  return this;
 	}
-  
+
 	/**
 	 * Get a previously registered endpoint. Returns null when not found.
 	 *
@@ -126,13 +128,13 @@ export class ApiRegistry implements IApiRegistry {
 	 * @return {Rest|null}
 	 */
 	getEndpoint(name?: string): Rest {
-	  if (!name) {
-		return this.defaultEndpoint || null;
-	  }
-  
-	  return this.endpoints[name] || null;
+		if (!name) {
+			return this.defaultEndpoint || null;
+		}
+
+		return this.endpoints[name] || null;
 	}
-  
+
 	/**
 	 * Check if an endpoint has been registered.
 	 *
@@ -141,9 +143,9 @@ export class ApiRegistry implements IApiRegistry {
 	 * @return {boolean}
 	 */
 	public endpointExists(name: string): boolean {
-	  return !!this.endpoints[name];
+		return !!this.endpoints[name];
 	}
-  
+
 	/**
 	 * Set a previously registered endpoint as the default.
 	 *
@@ -153,11 +155,11 @@ export class ApiRegistry implements IApiRegistry {
 	 * @chainable
 	 */
 	public setDefaultEndpoint(name: string): IApiRegistry {
-	  this.defaultEndpoint = this.getEndpoint(name);
-  
-	  return this;
+		this.defaultEndpoint = this.getEndpoint(name);
+
+		return this;
 	}
-  
+
 	/**
 	 * Set a base url for all endpoints
 	 *
@@ -167,11 +169,11 @@ export class ApiRegistry implements IApiRegistry {
 	 * @chainable
 	 */
 	public setDefaultBaseUrl(baseUrl: string): IApiRegistry {
-	  this.defaultBaseUrl = baseUrl;
-  
-	  return  this;
+		this.defaultBaseUrl = baseUrl;
+
+		return this;
 	}
-  
+
 	/**
 	 * Configure with an object
 	 *
@@ -180,24 +182,24 @@ export class ApiRegistry implements IApiRegistry {
 	 * @return {ApiRegistry} this Fluent interface
 	 * @chainable
 	 */
-	public configure(config: {defaultEndpoint: string, defaultBaseUrl: string, endpoints: Array<{name: string, endpoint: string, config: {}, default: boolean}>}): IApiRegistry {
-	  if (config.defaultBaseUrl) {
-		this.defaultBaseUrl = config.defaultBaseUrl;
-	  }
-  
-	  config.endpoints.forEach(endpoint => {
-		this.registerEndpoint(endpoint.name, endpoint.endpoint, endpoint.config);
-  
-		if (endpoint.default) {
-		  this.setDefaultEndpoint(endpoint.name);
+	public configure(config: { defaultEndpoint: string, defaultBaseUrl: string, endpoints: Array<{ name: string, endpoint: string, config: {}, default: boolean }> }): IApiRegistry {
+		if (config.defaultBaseUrl) {
+			this.defaultBaseUrl = config.defaultBaseUrl;
 		}
-	  });
-  
-	  if (config.defaultEndpoint) {
-		this.setDefaultEndpoint(config.defaultEndpoint);
-	  }
-  
-	  return this;
+
+		config.endpoints.forEach(endpoint => {
+			this.registerEndpoint(endpoint.name, endpoint.endpoint, endpoint.config);
+
+			if (endpoint.default) {
+				this.setDefaultEndpoint(endpoint.name);
+			}
+		});
+
+		if (config.defaultEndpoint) {
+			this.setDefaultEndpoint(config.defaultEndpoint);
+		}
+
+		return this;
 	}
 
 	init(): void | Promise<any> {
@@ -208,7 +210,18 @@ export class ApiRegistry implements IApiRegistry {
 		container.register(Registration.singleton(IApiRegistry, this));
 		container.register(
 			AppTask.beforeActivate(IApiRegistry, async plugin => {
-				//await plugin.init();
+				let cfgProvider = container.get(IAppConfiguration);
+				let cnf = await cfgProvider.get('au2-api');
+				let aut = container.get(Authentication);
+				if (cnf) {
+					for (let key of Object.keys(cnf)) {
+						plugin.registerEndpoint(key, cnf[key].url);
+						if (cnf[key].auth) {
+							let rst = plugin.endpoints[key] as Rest;
+							rst.addInterceptor(aut.tokenInterceptor);
+						}
+					}
+				}
 			}));
 	}
-  }
+}

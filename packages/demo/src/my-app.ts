@@ -10,9 +10,8 @@ export class MyApp {
   ) { }
 
   async attached() {
-    console.log(await this.Configuration.get('au2-configuration'));
     await this.login();
-    await this.callGoogleApi();
+    //await this.callGoogleApi();
     await this.callLookupsApi();
   }
   public message = 'Hello World!';
