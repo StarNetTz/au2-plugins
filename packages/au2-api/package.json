@@ -1,5 +1,5 @@
 {
-  "name": "au2-api",
+  "name": "@starnetbih/au2-api",
   "description": "An Aurelia 2 client application.",
   "version": "0.1.0",
   "repository": {

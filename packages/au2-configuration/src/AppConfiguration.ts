@@ -5,7 +5,7 @@ import  {IAppConfigurationSettings,AppConfigurationRegistry, AppConfigurationSet
 
 export interface IAppConfiguration {
 	get(key: string): any;
-	init(): void;
+	init(): void | Promise<any>;
 }
 
 export const IAppConfiguration = DI.createInterface<IAppConfiguration>('IAppConfiguration');
