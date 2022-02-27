@@ -1,53 +1,16 @@
 import { IContainer, IRegistry, noop, DI, Registration } from '@aurelia/kernel';
 import { AppTask } from '@aurelia/runtime-html';
 import { IHttpClient } from '@aurelia/fetch-client';
+import  {IAppConfigurationSettings,AppConfigurationRegistry, AppConfigurationSettingsProvider, DefaultAppConfigurationSettings} from './AppConfigurationSettings';
 
 export interface IAppConfiguration {
 	get(key: string): any;
 	init(): void;
 }
+
 export const IAppConfiguration = DI.createInterface<IAppConfiguration>('IAppConfiguration');
 
-export interface IAppConfigurationSettings {
-	Dir: string;
-	File: string;
-
-}
-export const IAppConfigurationSettings = DI.createInterface<IAppConfigurationSettings>('IAppConfigurationSettings');
-
-export class DefaultAppConfigurationSettings implements IAppConfigurationSettings {
-	public Dir: string = "config";
-	public File: string = "config.json";
-
-	public static register(container: IContainer) {
-		Registration.singleton(IAppConfigurationSettings, this).register(container);
-	}
-}
-
-export type AppConfigurationSettingsProvider = (settings: IAppConfigurationSettings) => void | Promise<unknown>;
-
-export interface AppConfigurationSettings extends IRegistry {
-	settingsProvider: AppConfigurationSettingsProvider;
-	register(container: IContainer): IContainer;
-	customize(cb: AppConfigurationSettingsProvider, registrations?: IRegistry[]): AppConfigurationSettings;
-}
-
-function createAppConfigurationPlugin(settingsProvider: AppConfigurationSettingsProvider, registrations: IRegistry[]): AppConfigurationSettings {
-	return {
-		settingsProvider: settingsProvider,
-		register: (ctn: IContainer) => {
-			return ctn.register(
-				...registrations,
-				AppTask.beforeCreate(() => settingsProvider(ctn.get(IAppConfigurationSettings)) as void)
-			);
-		},
-		customize(cb: AppConfigurationSettingsProvider, regs?: IRegistry[]) {
-			return createAppConfigurationPlugin(cb, regs ?? registrations);
-		},
-	};
-}
-
-export class Configuration implements IAppConfiguration {
+export class AppConfiguration implements IAppConfiguration {
 	private Config: any;
 
 	constructor(@IHttpClient private http: IHttpClient, @IAppConfigurationSettings private settings: IAppConfigurationSettings) {
@@ -56,8 +19,8 @@ export class Configuration implements IAppConfiguration {
 	public static register(container: IContainer): void {
 		container.register(Registration.singleton(IAppConfiguration, this));
 		container.register(
-			AppTask.beforeActivate(IAppConfiguration, async config => {
-				await config.init();
+			AppTask.beforeActivate(IAppConfiguration, async plugin => {
+				await plugin.init();
 			}));
 	}
 
@@ -89,5 +52,20 @@ export class Configuration implements IAppConfiguration {
 
 export const AppConfigurationPlugin = createAppConfigurationPlugin(noop, [
 	DefaultAppConfigurationSettings,
-	Configuration
+	AppConfiguration
 ]);
+
+	function createAppConfigurationPlugin(settingsProvider: AppConfigurationSettingsProvider, registrations: IRegistry[]): AppConfigurationRegistry {
+		return {
+			settingsProvider: settingsProvider,
+			register: (ctn: IContainer) => {
+				return ctn.register(
+					...registrations,
+					AppTask.beforeCreate(() => settingsProvider(ctn.get(IAppConfigurationSettings)) as void)
+				);
+			},
+			customize(cb: AppConfigurationSettingsProvider, regs?: IRegistry[]) {
+				return createAppConfigurationPlugin(cb, regs ?? registrations);
+			},
+		};
+	}
