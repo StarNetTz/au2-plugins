@@ -1,6 +1,9 @@
 {
 	"url": "http://google.ba",
 	"au2-api": {
+		"authApi": {
+			"url": "http://localhost:5005"
+		},
 		"lookupsApi": {
 			"url": "https://api.daas.selfip.net",
 			"auth": false

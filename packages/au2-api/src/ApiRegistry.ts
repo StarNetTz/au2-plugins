@@ -3,7 +3,7 @@ import { Rest } from './Rest';
 import { IContainer, Registration, DI } from '@aurelia/kernel';
 import { AppTask } from '@aurelia/runtime-html';
 import { IAppConfiguration } from '@starnetbih/au2-configuration';
-import { Authentication } from '@starnetbih/au2-auth';
+import { Authentication, IAuthOptions } from '@starnetbih/au2-auth';
 
 
 export interface RestOptions {
@@ -213,12 +213,19 @@ export class ApiRegistry implements IApiRegistry {
 				let cfgProvider = container.get(IAppConfiguration);
 				let cnf = await cfgProvider.get('au2-api');
 				let aut = container.get(Authentication);
+				let autoptions = container.get(IAuthOptions);
 				if (cnf) {
 					for (let key of Object.keys(cnf)) {
-						plugin.registerEndpoint(key, cnf[key].url);
-						if (cnf[key].auth) {
-							let rst = plugin.endpoints[key] as Rest;
-							rst.addInterceptor(aut.tokenInterceptor);
+						if (key == "authApi") {
+							if (autoptions)
+								autoptions.baseUrl = cnf[key].url;
+						}
+						else {
+							plugin.registerEndpoint(key, cnf[key].url);
+							if (cnf[key].auth) {
+								let rst = plugin.endpoints[key] as Rest;
+								rst.addInterceptor(aut.tokenInterceptor);
+							}
 						}
 					}
 				}

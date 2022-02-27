@@ -24,7 +24,6 @@ export class Rest  implements IRest {
 		}
 	};
 
-
 	constructor(@IHttpClient private client: IHttpClient, private endpoint: string, private useTraditionalUriTemplates?: boolean) {}
 	
 	addInterceptor(interceptor: Interceptor) {

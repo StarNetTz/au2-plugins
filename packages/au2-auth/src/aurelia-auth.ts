@@ -20,7 +20,7 @@ function createConfiguration(options?: Partial<IAuthConfigOptions>) {
 
             return container.register(
                 Registration.instance(IAuthOptions, mergedOptions), 
-                ...DefaultComponents
+                ...DefaultComponents,
             );
         },
         configure(options?: IAuthConfigOptions) {

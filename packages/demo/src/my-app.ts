@@ -10,8 +10,7 @@ export class MyApp {
   ) { }
 
   async attached() {
-    await this.login();
-    //await this.callGoogleApi();
+  //  await this.login();
     await this.callLookupsApi();
   }
   public message = 'Hello World!';
@@ -37,11 +36,7 @@ export class MyApp {
     console.log(resp3);
   }
 
-  private async callGoogleApi() {
-    let rest = this.Reg.getEndpoint('googleApi');
-    let resp = await rest.find({ resource: '/CurrencyExchange/GetJson?date=02%2F26%2F2022%2000%3A00%3A00' });
-    console.log(resp);
-  }
+
 
   private async login() {
     let u = await this.Auth.login({ provider: "credentials", username: "admin", password: "admin" }, {});

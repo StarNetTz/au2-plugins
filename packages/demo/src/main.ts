@@ -4,24 +4,11 @@ import { AppConfigurationPlugin, IAppConfiguration } from '@starnetbih/au2-confi
 import { ApiPlugin, IApiRegistry, Rest, RestOptions } from '@starnetbih/au2-api';
 import { AureliaAuthConfiguration, IAuthConfigOptions, Authentication } from '@starnetbih/au2-auth';
 
-
-const xx = { baseUrl: 'http://localhost:5005', responseTokenProp: 'bearerToken' };
-let cnf : IAppConfiguration;
 Aurelia
   .register(
-    AppTask.beforeCreate(IContainer, async container => {
-     console.log("before create");
-    }),
-    AppTask.hydrating(IContainer, async container => {
-      console.log("hydrating");
-     }),
-     AppTask.hydrated(IContainer, async container => {
-      console.log("hydrating");
-     }),
-    AureliaAuthConfiguration.configure(<IAuthConfigOptions>xx),
+    AureliaAuthConfiguration.configure(<IAuthConfigOptions>{responseTokenProp: 'bearerToken' }),
     AppConfigurationPlugin.customize(
       settings => {
-        console.log("conf");
         settings.Dir = "config"
         settings.File = "config.json"
       }),
