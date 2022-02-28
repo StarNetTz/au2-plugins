@@ -5,7 +5,12 @@
   "files": [
     "dist"
   ],
-  "version": "0.1.4",
+  "keywords": [
+    "aurelia",
+    "plugin",
+    "api"
+  ],
+  "version": "0.1.5",
   "repository": {
     "type": "git",
     "url": "???"
@@ -13,8 +18,8 @@
   "license": "MIT",
   "dependencies": {
     "aurelia": "latest",
-    "@starnetbih/au2-configuration": "0.1.4",
-    "@starnetbih/au2-auth": "0.1.4",
+    "@starnetbih/au2-configuration": "0.1.5",
+    "@starnetbih/au2-auth": "0.1.5",
     "extend": "^3.0.2"
   },
   "devDependencies": {

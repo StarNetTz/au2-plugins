@@ -5,7 +5,13 @@
   "files": [
     "dist"
   ],
-  "version": "0.1.4",
+  "version": "0.1.5",
+  "keywords": [
+    "aurelia",
+    "plugin",
+    "auth",
+    "authentication"
+  ],
   "repository": {
     "type": "git",
     "url": "???"
