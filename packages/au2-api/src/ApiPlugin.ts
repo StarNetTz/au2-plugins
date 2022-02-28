@@ -1,24 +1,25 @@
-import { IContainer, IRegistry, noop, DI, Registration } from '@aurelia/kernel';
+import { IContainer, IRegistry, noop } from '@aurelia/kernel';
 import { AppTask } from '@aurelia/runtime-html';
 import { ApiRegistry, IApiRegistry } from "./ApiRegistry";
 
-export interface PluginRegistry extends IRegistry {
-	configurator: ApiRegistryConfigurator;
+export interface IApiPlugin extends IRegistry {
 	register(container: IContainer): IContainer;
-	configure(cb: ApiRegistryConfigurator, registrations?: IRegistry[]): PluginRegistry;
+	configureCallback: ApiRegistryConfigurator;
+
+	configure(cb: ApiRegistryConfigurator, registrations?: IRegistry[]): IApiPlugin;
 }
 
 export const ApiPlugin = createAppConfigurationPlugin(noop, [
 	ApiRegistry
 ]);
 
-function createAppConfigurationPlugin(configurator: ApiRegistryConfigurator, registrations: IRegistry[]): PluginRegistry {
+function createAppConfigurationPlugin(configureCallback: ApiRegistryConfigurator, registrations: IRegistry[]): IApiPlugin {
 	return {
-		configurator: configurator,
+		configureCallback: configureCallback,
 		register: (ctn: IContainer) => {
 			return ctn.register(
 				...registrations,
-				AppTask.beforeCreate(() => configurator(ctn.get(IApiRegistry)) as void)
+				AppTask.beforeCreate(() => configureCallback(ctn.get(IApiRegistry)) as void)
 			);
 		},
 		configure(cb: ApiRegistryConfigurator, regs?: IRegistry[]) {
