@@ -6,3 +6,4 @@ export * from './authentication';
 export * from './oAuth1';
 export * from './oAuth2';
 export * from './popup';
+export * from './configuration';

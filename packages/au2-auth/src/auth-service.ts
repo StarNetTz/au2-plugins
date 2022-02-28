@@ -4,13 +4,16 @@ import { OAuth1 } from "./oAuth1";
 import { OAuth2 } from "./oAuth2";
 import { status, joinUrl } from "./auth-utilities";
 import { DI, EventAggregator } from "@aurelia/kernel";
-import { IAuthOptions } from "./aurelia-auth";
 import { IAuthConfigOptions } from "./configuration";
 
 export const IAuthService = DI.createInterface<IAuthService>("IAuthService", x => x.singleton(AuthService));
 
-export interface IAuthService extends AuthService {  }
-
+export interface IAuthService extends AuthService { }
+export interface ILoginRequest {
+  email: string;
+  password: string;
+  credentials: any;
+}
 export class AuthService {
   protected tokenInterceptor;
 
@@ -19,7 +22,7 @@ export class AuthService {
     readonly auth: Authentication,
     readonly oAuth1: OAuth1,
     readonly oAuth2: OAuth2,
-    @IAuthOptions readonly config: IAuthConfigOptions,
+    @IAuthConfigOptions readonly config: IAuthConfigOptions,
     readonly eventAggregator: EventAggregator
   ) {
     this.tokenInterceptor = auth.tokenInterceptor;
@@ -78,15 +81,15 @@ export class AuthService {
       });
   }
 
-  login(email, password) {
+  login(req: Partial<ILoginRequest>) {
     let loginUrl = this.auth.getLoginUrl();
     let content;
-    if (typeof arguments[1] !== "string") {
-      content = arguments[0];
+    if (req.credentials != undefined) {
+      content = req.credentials;
     } else {
       content = {
-        email: email,
-        password: password,
+        email: req.email,
+        password: req.password,
       };
     }
 

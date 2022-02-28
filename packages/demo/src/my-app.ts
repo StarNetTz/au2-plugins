@@ -10,9 +10,10 @@ export class MyApp {
   ) { }
 
   async attached() {
-  //  await this.login();
+    await this.login();
     await this.callLookupsApi();
   }
+
   public message = 'Hello World!';
 
   private async callLookupsApi() {
@@ -36,10 +37,10 @@ export class MyApp {
     console.log(resp3);
   }
 
-
-
   private async login() {
-    let u = await this.Auth.login({ provider: "credentials", username: "admin", password: "admin" }, {});
+    let u = await this.Auth.login({
+      credentials: { username: "admin", password: "admin" }
+    });
     console.log(u);
     console.log(this.Auth.getTokenPayload());
   }

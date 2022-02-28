@@ -1,9 +1,9 @@
-import { IAuthConfigOptions, IAuthOptions } from "./configuration";
+import { IAuthConfigOptions } from "./configuration";
 
 export class Storage {
   private storage;
 
-  constructor(@IAuthOptions readonly config: IAuthConfigOptions) {
+  constructor(@IAuthConfigOptions readonly config: IAuthConfigOptions) {
     this.storage = this._getStorage(this.config.storage);
   }
 

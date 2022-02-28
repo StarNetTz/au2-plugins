@@ -1,7 +1,7 @@
 import { extend, forEach, joinUrl, status } from "./auth-utilities";
 import { Storage } from "./storage";
 import { Popup } from "./popup";
-import { IAuthConfigOptions, IAuthOptions } from "./configuration";
+import { IAuthConfigOptions } from "./configuration";
 import { IHttpClient, json } from "@aurelia/fetch-client";
 
 export class OAuth1 {
@@ -12,7 +12,7 @@ export class OAuth1 {
     readonly storage: Storage,
     readonly popup: Popup,
     @IHttpClient readonly http: IHttpClient,
-    @IAuthOptions readonly config: IAuthConfigOptions
+    @IAuthConfigOptions readonly config: IAuthConfigOptions
   ) {
     this.defaults = {
       url: null,

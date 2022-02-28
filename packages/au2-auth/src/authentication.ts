@@ -1,13 +1,13 @@
 import {Storage} from './storage';
 import {joinUrl, isObject, isString} from './auth-utilities';
-import { IAuthOptions, IAuthConfigOptions } from './configuration';
+import { IAuthConfigOptions } from './configuration';
 
 export class Authentication {
     private tokenName;
     private idTokenName;
     private initialUrl;
 
-  constructor(private storage: Storage, @IAuthOptions readonly config: IAuthConfigOptions) {
+  constructor(private storage: Storage, @IAuthConfigOptions readonly config: IAuthConfigOptions) {
     this.storage = storage;
     this.tokenName = this.config.tokenPrefix ?
       this.config.tokenPrefix + '_' + this.config.tokenName : this.config.tokenName;

@@ -5,11 +5,8 @@
 			"url": "http://localhost:5005"
 		},
 		"lookupsApi": {
-			"url": "https://api.daas.selfip.net",
-			"auth": false
-		},
-		"googleApi": {
-			"url": "https://google.ba"
+			"url": "http://localhost:5000",
+			"auth": true
 		}
 	}
 }

@@ -10,7 +10,7 @@ import {
 } from "./auth-utilities";
 import { Storage } from "./storage";
 import { Popup } from "./popup";
-import { IAuthConfigOptions, IAuthOptions } from "./configuration";
+import { IAuthConfigOptions } from "./configuration";
 import { Authentication } from "./authentication";
 
 export class OAuth2 {
@@ -21,7 +21,7 @@ export class OAuth2 {
     readonly popup: Popup,
     readonly auth: Authentication,
     @IHttpClient readonly http: IHttpClient,
-    @IAuthOptions readonly config: IAuthConfigOptions
+    @IAuthConfigOptions readonly config: IAuthConfigOptions
   ) {
     this.defaults = {
       url: null,

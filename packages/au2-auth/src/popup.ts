@@ -1,4 +1,4 @@
-import { IAuthConfigOptions, IAuthOptions } from "./configuration";
+import { IAuthConfigOptions } from "./configuration";
 import {parseQueryString, extend, forEach} from './auth-utilities';
 
 export class Popup {
@@ -6,7 +6,7 @@ export class Popup {
   protected polling;
   protected url;
 
-  constructor(@IAuthOptions readonly config: IAuthConfigOptions) {
+  constructor(@IAuthConfigOptions readonly config: IAuthConfigOptions) {
     this.popupWindow = null;
     this.polling = null;
     this.url = '';
