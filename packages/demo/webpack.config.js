@@ -7,7 +7,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const cssLoader = 'css-loader';
 
-
 const postcssLoader = {
   loader: 'postcss-loader',
   options: {

@@ -1,29 +1,44 @@
 # au2-auth
 
-This project is bootstrapped by [aurelia/new](https://github.com/aurelia/new).
+This library is a based on aurelia2-auth plugin and previous work done by SpoonX.
 
-## Start dev web server
+**Full disclosure**: this plugin is in alpha stage. Use at your own risk.
 
-    npm start
+## Installation
 
-## Build the app in production mode
+`npm install @starnetbih/au2-auth` or `yarn add @starnetbih/au2-auth`
 
-    npm run build
+## Configuration
 
-It builds all files to dist folder. To deploy to production server, copy all the `dist/*` files to production root folder.
+Inside of your main.ts/main.js file register the plugin on the register method:
 
-For example
+```js
+import { AureliaAuthPlugin } from '@starnetbih/au2-auth';
+
+Aurelia.register(AureliaAuthPlugin); 
+
+//Or configure
+Aurelia.register(
+    AureliaAuthPlugin.configure( cfg => {
+        cfg.responseTokenProp = 'bearerToken';
+    })
+);
+
 ```
-dist/index.html
-dist/foo.12345.js
-```
-Copy to production root folder
-```
-root_folder/index.html
-root_folder/foo.12345.js
-```
+## Usage
 
+```js
+import { IAppConfiguration } from '@starnetbih/au2-auth';
 
-## Analyze webpack bundle
+export class MyApp {
 
-    npm run analyze
+    constructor( @IAuthService private Auth: IAuthService ) { }
+
+    async attached() {
+        let resp = await this.Auth.login({
+            credentials: { username: "admin", password: "admin" }
+        });
+        console.log(this.Auth.getTokenPayload());
+    }
+}
+```

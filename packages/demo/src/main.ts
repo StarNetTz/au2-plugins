@@ -11,6 +11,9 @@ Aurelia
     AureliaAuthPlugin.configure(cfg => {
       cfg.responseTokenProp = 'bearerToken';
     }),
-    ApiPlugin
+    ApiPlugin.configure( c=>
+      {
+        c.registerEndpoint('a','http://konj.dom');
+      })
   ).app(MyApp)
   .start();

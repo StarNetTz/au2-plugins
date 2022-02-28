@@ -1,5 +1,5 @@
 import { IAppConfiguration } from '@starnetbih/au2-configuration';
-import { IApiRegistry, IRest, IRestRequest } from '@starnetbih/au2-api';
+import { IApiRegistry } from '@starnetbih/au2-api';
 import { IAuthService } from '@starnetbih/au2-auth';
 
 export class MyApp {

@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const Dotenv = require('dotenv-webpack');
 const nodeExternals = require('webpack-node-externals');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const cssLoader = 'css-loader';
-
+const outDir = path.resolve(__dirname, 'dist');
 
 const postcssLoader = {
   loader: 'postcss-loader',
@@ -17,10 +18,10 @@ const postcssLoader = {
   }
 };
 
-module.exports = function(env, { analyze }) {
+module.exports = function (env, { analyze }) {
   const production = env.production || process.env.NODE_ENV === 'production';
   return {
-    externalsPresets: { node: true }, 
+    externalsPresets: { node: true },
     externals: [
       nodeExternals(),
       nodeExternals({
@@ -50,8 +51,8 @@ module.exports = function(env, { analyze }) {
     module: {
       rules: [
         { test: /\.(png|svg|jpg|jpeg|gif)$/i, type: 'asset' },
-        { test: /\.(woff|woff2|ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,  type: 'asset' },
-        { test: /\.css$/i, use: [ 'style-loader', cssLoader, postcssLoader ] },
+        { test: /\.(woff|woff2|ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/i, type: 'asset' },
+        { test: /\.css$/i, use: ['style-loader', cssLoader, postcssLoader] },
         { test: /\.ts$/i, use: ['ts-loader', '@aurelia/webpack-loader'], exclude: /node_modules/ },
         {
           test: /[/\\]src[/\\].+\.html$/i,
@@ -63,9 +64,14 @@ module.exports = function(env, { analyze }) {
     plugins: [
       new HtmlWebpackPlugin({ template: 'index.html' }),
       new Dotenv({
-        path: `./.env${production ? '' :  '.' + (process.env.NODE_ENV || 'development')}`,
+        path: `./.env${production ? '' : '.' + (process.env.NODE_ENV || 'development')}`,
       }),
-      analyze && new BundleAnalyzerPlugin()
+      analyze && new BundleAnalyzerPlugin(),
+      new CopyWebpackPlugin({
+        patterns: [
+          { from: __dirname + '/README.md', to: outDir + '/README.md' }
+        ]
+      })
     ].filter(p => p)
   }
 }
