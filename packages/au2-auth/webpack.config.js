@@ -4,10 +4,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const Dotenv = require('dotenv-webpack');
 const nodeExternals = require('webpack-node-externals');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const cssLoader = 'css-loader';
-const outDir = path.resolve(__dirname, 'dist');
 
 const postcssLoader = {
   loader: 'postcss-loader',
@@ -66,12 +64,7 @@ module.exports = function (env, { analyze }) {
       new Dotenv({
         path: `./.env${production ? '' : '.' + (process.env.NODE_ENV || 'development')}`,
       }),
-      analyze && new BundleAnalyzerPlugin(),
-      new CopyWebpackPlugin({
-        patterns: [
-          { from: __dirname + '/README.md', to: outDir + '/README.md' }
-        ]
-      })
+      analyze && new BundleAnalyzerPlugin()
     ].filter(p => p)
   }
 }
