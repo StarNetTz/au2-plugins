@@ -1,21 +1,16 @@
-import {Aurelia, Registration, AppTask}  from 'aurelia';
+import { Aurelia } from 'aurelia';
 import { MyApp } from './my-app';
 import { AppConfigurationPlugin } from '@starnetbih/au2-configuration';
 import { ApiPlugin } from '@starnetbih/au2-api';
+import { AureliaAuthPlugin } from '@starnetbih/au2-auth';
+
 
 Aurelia
-.register(
-  AppConfigurationPlugin.customize(
-    settings => {
-      settings.Dir = "config"
-      settings.File = "config.json"
+  .register(
+    AppConfigurationPlugin,
+    AureliaAuthPlugin.configure(cfg => {
+      cfg.responseTokenProp = 'bearerToken';
     }),
-    ApiPlugin.customize(
-      (reg) => {
-        reg.registerEndpoint('api', 'https://api.daas.selfip.net');
-      }),
-  AppTask.beforeActivate(() => {
-    console.log('Before activate app');
-})
-).app(MyApp)
+    ApiPlugin
+  ).app(MyApp)
   .start();

@@ -1,3 +1,3 @@
 export * from './Rest';
-export * from './Plugin';
+export * from './ApiPlugin';
 export * from './ApiRegistry';

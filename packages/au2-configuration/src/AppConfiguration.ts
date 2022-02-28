@@ -1,7 +1,7 @@
 import { IContainer, IRegistry, noop, DI, Registration } from '@aurelia/kernel';
 import { AppTask } from '@aurelia/runtime-html';
 import { IHttpClient } from '@aurelia/fetch-client';
-import  {IAppConfigurationSettings,AppConfigurationRegistry, AppConfigurationSettingsProvider, DefaultAppConfigurationSettings} from './AppConfigurationSettings';
+import { IAppConfigurationSettings } from './AppConfigurationSettings';
 
 export interface IAppConfiguration {
 	get(key: string): any;
@@ -19,7 +19,7 @@ export class AppConfiguration implements IAppConfiguration {
 	public static register(container: IContainer): void {
 		container.register(Registration.singleton(IAppConfiguration, this));
 		container.register(
-			AppTask.beforeActivate(IAppConfiguration, async plugin => {
+			AppTask.beforeCreate(IAppConfiguration, async plugin => {
 				await plugin.init();
 			}));
 	}
@@ -30,7 +30,7 @@ export class AppConfiguration implements IAppConfiguration {
 
 	async init() {
 		let loc = window.location;
-		var fileUrl = loc.protocol + `/${this.settings.Dir}/${this.settings.File}`;
+		var fileUrl = loc.protocol + `/${this.settings.dir}/${this.settings.file}`;
 		let resp = await this.http.fetch(fileUrl);
 		this.Config = await resp.json();
 	}
@@ -49,23 +49,3 @@ export class AppConfiguration implements IAppConfiguration {
 		return currentObject;
 	}
 }
-
-export const AppConfigurationPlugin = createAppConfigurationPlugin(noop, [
-	DefaultAppConfigurationSettings,
-	AppConfiguration
-]);
-
-	function createAppConfigurationPlugin(settingsProvider: AppConfigurationSettingsProvider, registrations: IRegistry[]): AppConfigurationRegistry {
-		return {
-			settingsProvider: settingsProvider,
-			register: (ctn: IContainer) => {
-				return ctn.register(
-					...registrations,
-					AppTask.beforeCreate(() => settingsProvider(ctn.get(IAppConfigurationSettings)) as void)
-				);
-			},
-			customize(cb: AppConfigurationSettingsProvider, regs?: IRegistry[]) {
-				return createAppConfigurationPlugin(cb, regs ?? registrations);
-			},
-		};
-	}

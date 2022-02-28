@@ -1,6 +1,12 @@
 {
-	"url":"http://google.ba",
-	"ab":{
-		"x":3
+	"url": "http://google.ba",
+	"au2-api": {
+		"authApi": {
+			"url": "http://localhost:5005"
+		},
+		"lookupsApi": {
+			"url": "http://localhost:5000",
+			"auth": true
+		}
 	}
 }

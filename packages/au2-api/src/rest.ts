@@ -1,4 +1,4 @@
-import { IHttpClient } from '@aurelia/fetch-client';
+import { IHttpClient, Interceptor } from '@aurelia/fetch-client';
 import { buildQueryString, join } from './aurlia-path-utils';
 import extend from 'extend';
 
@@ -12,11 +12,11 @@ export interface IRestRequest{
 }
 export interface IRest {
 	find(req: IRestRequest): Promise<any | Error>;
-	post(req: IRestRequest): Promise<any | Error>
+	post(req: IRestRequest): Promise<any | Error>;
+	addInterceptor(interceptor:Interceptor);
 }
 
 export class Rest  implements IRest {
-
 	defaults: {} = {
 		headers: {
 			'Accept': 'application/json',
@@ -24,8 +24,11 @@ export class Rest  implements IRest {
 		}
 	};
 
-
 	constructor(@IHttpClient private client: IHttpClient, private endpoint: string, private useTraditionalUriTemplates?: boolean) {}
+	
+	addInterceptor(interceptor: Interceptor) {
+		this.client.interceptors.push(interceptor);
+	}
 
 	public find(req: IRestRequest): Promise<any | Error> {
 		return this.request('GET', this.getRequestPath(req.resource, this.useTraditionalUriTemplates, req.idOrCriteria), undefined, req.options, req.responseOutput);
