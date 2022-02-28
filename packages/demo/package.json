@@ -13,6 +13,10 @@
     "@starnetbih/au2-auth": "0.1.4",
     "aurelia": "latest"
   },
+  "keywords": [
+    "aurelia",
+    "aurelia2"
+  ],
   "devDependencies": {
     "@aurelia/testing": "latest",
     "@aurelia/webpack-loader": "latest",
