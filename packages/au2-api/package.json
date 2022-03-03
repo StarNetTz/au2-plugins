@@ -10,7 +10,7 @@
     "plugin",
     "api"
   ],
-  "version": "0.1.5",
+  "version": "0.1.6",
   "repository": {
     "type": "git",
     "url": "https://github.com/StarNetTz/au2-plugins.git",
@@ -19,8 +19,8 @@
   "license": "MIT",
   "dependencies": {
     "aurelia": "latest",
-    "@starnetbih/au2-configuration": "0.1.5",
-    "@starnetbih/au2-auth": "0.1.5",
+    "@starnetbih/au2-configuration": "0.1.6",
+    "@starnetbih/au2-auth": "0.1.6",
     "extend": "^3.0.2"
   },
   "devDependencies": {

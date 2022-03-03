@@ -3,7 +3,7 @@ import { Authentication } from "./authentication";
 import { OAuth1 } from "./oAuth1";
 import { OAuth2 } from "./oAuth2";
 import { status, joinUrl } from "./auth-utilities";
-import { DI, EventAggregator } from "@aurelia/kernel";
+import { DI, IEventAggregator } from "@aurelia/kernel";
 import { IAuthConfigOptions } from "./configuration";
 
 export const IAuthService = DI.createInterface<IAuthService>("IAuthService", x => x.singleton(AuthService));
@@ -23,7 +23,7 @@ export class AuthService {
     readonly oAuth1: OAuth1,
     readonly oAuth2: OAuth2,
     @IAuthConfigOptions readonly config: IAuthConfigOptions,
-    readonly eventAggregator: EventAggregator
+    @IEventAggregator readonly eventAggregator: IEventAggregator
   ) {
     this.tokenInterceptor = auth.tokenInterceptor;
   }
