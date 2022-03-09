@@ -19,11 +19,11 @@
   },
   "license": "MIT",
   "dependencies": {
-    "aurelia": "latest"
+    "aurelia": "^2.0.0-alpha.25"
   },
   "devDependencies": {
     "eslint": "^8.7.0",
-    "@aurelia/testing": "latest",
+    "@aurelia/testing": "^2.0.0-alpha.25",
     "htmlhint": "^1.1.1",
     "rimraf": "^3.0.2",
     "webpack": "^5.67.0",

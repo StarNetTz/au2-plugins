@@ -11,15 +11,15 @@
     "@starnetbih/au2-api": "0.1.7",
     "@starnetbih/au2-configuration": "0.1.7",
     "@starnetbih/au2-auth": "0.1.7",
-    "aurelia": "latest"
+    "aurelia": "^2.0.0-alpha.25"
   },
   "keywords": [
     "aurelia",
     "aurelia2"
   ],
   "devDependencies": {
-    "@aurelia/testing": "latest",
-    "@aurelia/webpack-loader": "latest",
+    "@aurelia/testing": "^2.0.0-alpha.25",
+    "@aurelia/webpack-loader": "^2.0.0-alpha.25",
     "@types/node": "^17.0.10",
     "@typescript-eslint/eslint-plugin": "^5.10.0",
     "@typescript-eslint/parser": "^5.10.0",
