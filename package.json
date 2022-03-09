@@ -2,9 +2,9 @@
 	"name": "starnetbih",
 	"private": true,
 	"workspaces": [
-	  "packages/**"
+		"packages/**"
 	],
 	"scripts": {
-	  "start": "npm run --prefix packages/demo start"
+		"start": "npm run --prefix packages/demo start"
 	}
-  }
+}

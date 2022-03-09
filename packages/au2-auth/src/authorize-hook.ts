@@ -1,5 +1,5 @@
 import { lifecycleHooks } from "@aurelia/runtime-html";
-import { IRouter } from '@aurelia/router';
+import { IRouter } from '@aurelia/router-lite';
 import { Authentication } from "./authentication";
 
 @lifecycleHooks()
