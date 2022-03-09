@@ -99,7 +99,7 @@
     "@aurelia/runtime" "2.0.0-alpha.25"
     "@aurelia/runtime-html" "2.0.0-alpha.25"
 
-"@aurelia/webpack-loader@^2.0.0-alpha.25", "@aurelia/webpack-loader@latest":
+"@aurelia/webpack-loader@^2.0.0-alpha.25":
   version "2.0.0-alpha.25"
   resolved "https://registry.yarnpkg.com/@aurelia/webpack-loader/-/webpack-loader-2.0.0-alpha.25.tgz#8075e5b2a7ae9495c1c81127b2167d52f550b2af"
   integrity sha512-F6nd8Z8UobBvqLtCJroXetJWOG0UZ5FH0svnJQ/LEzeINAtt0SdUZAqiyM8RSxH6R57s2GQdyJEtQQzxx5EekQ==
@@ -191,20 +191,6 @@
   version "1.0.0-next.21"
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.21.tgz#5de5a2385a35309427f6011992b544514d559aa1"
   integrity sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==
-
-"@starnetbih/au2-auth@0.1.6":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@starnetbih/au2-auth/-/au2-auth-0.1.6.tgz#8f7b8237903033fd3e0f6bb06dbdd74ff41ab5c9"
-  integrity sha512-0/s+xAb3ibRe3dR8h0jl6r6M5zUhCKueIYc6WzWzn45/b84OPQIA9ESRjYt7rkieo90lOp8ghdTq0zT7R6pBiQ==
-  dependencies:
-    aurelia latest
-
-"@starnetbih/au2-configuration@0.1.6":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@starnetbih/au2-configuration/-/au2-configuration-0.1.6.tgz#2c7fd130ef566bebefc95587d965b353d6bc4fff"
-  integrity sha512-ThURpN255yxvKfhQ5T8UvL6bLZd7QiTI4gAMmyqo4astVgl12wfGmLfcOdnGp1my3beGVWyENn/pXGKusKtwBw==
-  dependencies:
-    aurelia latest
 
 "@types/body-parser@*":
   version "1.19.2"
@@ -729,7 +715,7 @@ async@^2.6.2:
   dependencies:
     lodash "^4.17.14"
 
-aurelia@^2.0.0-alpha.25, aurelia@latest:
+aurelia@^2.0.0-alpha.25:
   version "2.0.0-alpha.25"
   resolved "https://registry.yarnpkg.com/aurelia/-/aurelia-2.0.0-alpha.25.tgz#eb147aafe59c3c841ee9013bf0ab32b7915d3011"
   integrity sha512-k/6j7onFwl8Tl92EHckiDSc+mDxZbCbkVc7Ij3aqMF3NZm1ul/EtXrK/TQJRvNBT0jw69NaQ+sd8CKdlMgrOSw==

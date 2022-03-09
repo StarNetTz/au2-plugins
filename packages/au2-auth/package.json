@@ -5,7 +5,7 @@
   "files": [
     "dist"
   ],
-  "version": "0.1.7",
+  "version": "0.1.8",
   "keywords": [
     "aurelia",
     "plugin",
@@ -34,7 +34,7 @@
     "style-loader": "^3.3.1",
     "css-loader": "^6.5.1",
     "dotenv-webpack": "^7.0.3",
-    "@aurelia/webpack-loader": "latest",
+    "@aurelia/webpack-loader": "^2.0.0-alpha.25",
     "ts-loader": "^9.2.6",
     "postcss-loader": "^6.2.1",
     "postcss": "^8.4.5",
