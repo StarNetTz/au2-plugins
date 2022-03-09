@@ -5,7 +5,7 @@
   "files": [
     "dist"
   ],
-  "version": "0.1.6",
+  "version": "0.1.8",
   "keywords": [
     "aurelia",
     "plugin",
@@ -19,11 +19,11 @@
   },
   "license": "MIT",
   "dependencies": {
-    "aurelia": "latest"
+    "aurelia": "^2.0.0-alpha.25"
   },
   "devDependencies": {
-    "@aurelia/testing": "latest",
-    "@aurelia/webpack-loader": "latest",
+    "@aurelia/testing": "^2.0.0-alpha.25",
+    "@aurelia/webpack-loader": "^2.0.0-alpha.25",
     "@types/node": "^17.0.10",
     "@typescript-eslint/eslint-plugin": "^5.10.0",
     "@typescript-eslint/parser": "^5.10.0",

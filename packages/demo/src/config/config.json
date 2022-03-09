@@ -1,11 +1,10 @@
 {
-	"url": "http://google.ba",
 	"au2-api": {
 		"authApi": {
-			"url": "http://localhost:5005"
+			"url": "https://auth.au2demo.ath.cx"
 		},
 		"lookupsApi": {
-			"url": "http://localhost:5000",
+			"url": "https://api.daas.selfip.net",
 			"auth": true
 		}
 	}
