@@ -10,7 +10,7 @@
   "dependencies": {
     "@starnetbih/au2-configuration": "0.2.1",
     "@starnetbih/au2-auth": "0.2.1",
-    "@starnetbih/au2-api": "0.2.1",
+    "@starnetbih/au2-api": "0.2.2",
     "aurelia": "latest"
   },
   "keywords": [
