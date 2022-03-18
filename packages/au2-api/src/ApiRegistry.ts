@@ -2,7 +2,7 @@ import { HttpClient, HttpClientConfiguration } from '@aurelia/fetch-client';
 import { Rest } from './Rest';
 import { IContainer, Registration, DI } from '@aurelia/kernel';
 import { AppTask } from '@aurelia/runtime-html';
-import { IAppConfiguration } from '@starnetbih/au2-configuration';
+import { IAureliaConfiguration } from '@starnetbih/au2-configuration';
 import { Authentication, IAuthConfigOptions } from '@starnetbih/au2-auth';
 
 export interface RestOptions {
@@ -30,6 +30,7 @@ export interface IApiRegistry {
 	defaultEndpoint: Rest;
 	defaultBaseUrl: string;
 }
+
 export const IApiRegistry = DI.createInterface<IApiRegistry>('IApiRegistry');
 
 export class ApiRegistry implements IApiRegistry {
@@ -39,7 +40,7 @@ export class ApiRegistry implements IApiRegistry {
 	defaultBaseUrl: string;
 
 	registerEndpoint(name: string, configureMethod?: string | Function, defaults?: {}, restOptions?: RestOptions): IApiRegistry {
-		let newClient = new HttpClient();
+		const newClient = new HttpClient();
 		let useTraditionalUriTemplates;
 
 		if (restOptions !== undefined) {
@@ -139,12 +140,12 @@ export class ApiRegistry implements IApiRegistry {
 	}
 
 	private static async RegisterFromConfigFileAndAddAuthIntercetor(container: IContainer, plugin: IApiRegistry) {
-		let cfgProvider = container.get(IAppConfiguration);
-		let cnf = await cfgProvider.get('au2-api');
-		let aut = container.get(Authentication);
-		let autoptions = container.get(IAuthConfigOptions);
+		const cfgProvider = container.get(IAureliaConfiguration);
+		const cnf = await cfgProvider.get('au2-api');
+		const aut = container.get(Authentication);
+		const autoptions = container.get(IAuthConfigOptions);
 		if (cnf) {
-			for (let key of Object.keys(cnf)) {
+			for (const key of Object.keys(cnf)) {
 				if (key == "authApi") {
 					if (autoptions)
 						autoptions.baseUrl = cnf[key].url;
@@ -152,7 +153,7 @@ export class ApiRegistry implements IApiRegistry {
 				else {
 					plugin.registerEndpoint(key, cnf[key].url);
 					if (cnf[key].auth) {
-						let rst = plugin.endpoints[key] as Rest;
+						const rst = plugin.endpoints[key] as Rest;
 						rst.addInterceptor(aut.tokenInterceptor);
 					}
 				}

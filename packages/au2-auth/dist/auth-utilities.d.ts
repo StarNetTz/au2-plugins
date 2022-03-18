@@ -1,0 +1,14 @@
+export declare function status(response: any): any;
+export declare function isDefined(value: any): boolean;
+export declare function camelCase(name: any): any;
+export declare function parseQueryString(keyValue: any): {};
+export declare function isString(value: any): boolean;
+export declare function isObject(value: any): boolean;
+export declare function isFunction(value: any): boolean;
+export declare function joinUrl(baseUrl: any, url: any): any;
+export declare function isBlankObject(value: any): boolean;
+export declare function isArrayLike(obj: any): boolean;
+export declare function isWindow(obj: any): boolean;
+export declare function extend(dst: any): any;
+export declare function merge(dst: any): any;
+export declare function forEach(obj: any, iterator: any, context: any): any;

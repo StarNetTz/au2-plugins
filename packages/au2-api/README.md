@@ -34,22 +34,25 @@ Aurelia.register(ApiPlugin.configure(cfg => {
 /* Or configure by convention, using au2-configuration plugin */
 Aurelia.register(ApiPlugin); 
 ```
+
 #### Configure using configuration
 
 Make sure that your config.json used by au2-configuration plugin contains **au2-api** section:
+
 ```js
 {
-	"au2-api": {
-		"myApi1": {
-			"url": "http://localhost:5005"
-		},
-		"myApi2": {
-			"url": "http://localhost:5000",
-			"auth": true
-		}
-	}
+ "au2-api": {
+  "myApi1": {
+   "url": "http://localhost:5005"
+  },
+  "myApi2": {
+   "url": "http://localhost:5000",
+   "auth": true
+  }
+ }
 }
 ```
+
 au2-auth plugin takes care of adding the jwt token to all requests on endpoints with "auth" set to true.
 
 ## Usage

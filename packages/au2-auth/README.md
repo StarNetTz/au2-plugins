@@ -15,16 +15,16 @@ Inside of your main.ts/main.js file register the plugin on the register method:
 ```js
 import { AureliaAuthPlugin } from '@starnetbih/au2-auth';
 
-Aurelia.register(AureliaAuthPlugin); 
+Aurelia.register(AureliaConfigurationConfiguration); 
 
 //Or configure
 Aurelia.register(
-    AureliaAuthPlugin.configure( cfg => {
-        cfg.responseTokenProp = 'bearerToken';
-    })
+     AureliaAuthConfiguration.configure({responseTokenProp: 'bearerToken'})
 );
 
+
 ```
+
 ## Usage
 
 ```js
