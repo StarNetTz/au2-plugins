@@ -1,6 +1,6 @@
 {
     "name": "@starnetbih/au2-api",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "description": "Api plugin for aurelia 2 (alpha)",
     "keywords": [
         "aurelia",
@@ -56,7 +56,7 @@
         "@aurelia/kernel": "latest",
         "@aurelia/runtime": "latest",
         "@aurelia/runtime-html": "latest",
-        "@starnetbih/au2-configuration": "0.2.0",
-        "@starnetbih/au2-auth": "0.2.0"
+        "@starnetbih/au2-configuration": "0.2.1",
+        "@starnetbih/au2-auth": "0.2.1"
     }
 }

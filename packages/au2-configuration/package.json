@@ -1,13 +1,13 @@
 {
     "name": "@starnetbih/au2-configuration",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "description": "Configuration (app settings) plugin for aurelia 2 (alpha)",
     "keywords": [
         "aurelia",
         "plugin",
         "config",
         "configuration"
-      ],
+    ],
     "main": "dist/index.js",
     "module": "dist/aurelia-plugin.es.js",
     "browser": "dist/aurelia-plugin.bundle.js",
@@ -16,7 +16,7 @@
         "type": "git",
         "url": "https://github.com/StarNetTz/au2-plugins.git",
         "directory": "packages/au2-configuration"
-      },
+    },
     "license": "MIT",
     "scripts": {
         "lint:js": "eslint src test --ext .js,.ts",
