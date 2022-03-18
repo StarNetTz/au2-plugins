@@ -1,1 +1,0 @@
-{"version":3,"file":"AureliaConfigurationOptions.js","sourceRoot":"","sources":["../src/AureliaConfigurationOptions.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,EAAE,EAAE,MAAM,iBAAiB,CAAC;AAOrC,MAAM,CAAC,MAAM,4BAA4B,GAAG,EAAE,CAAC,eAAe,CAA+B,8BAA8B,CAAC,CAAC;AAE7H,MAAM,CAAC,MAAM,kCAAkC,GAAkC;IAChF,GAAG,EAAG,QAAQ;IACd,IAAI,EAAG,aAAa;CACpB,CAAA"}

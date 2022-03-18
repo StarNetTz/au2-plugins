@@ -1,1 +1,0 @@
-{"version":3,"file":"UrlFactory.js","sourceRoot":"","sources":["../src/UrlFactory.ts"],"names":[],"mappings":"AAIA,MAAM,OAAO,UAAU;IACtB,MAAM,CAAC,MAAM,CAAC,GAAY,EAAE,QAAsC;QACjE,OAAO,GAAG,CAAC,QAAQ,CAAC,QAAQ,GAAG,IAAI,QAAQ,CAAC,GAAG,IAAI,QAAQ,CAAC,IAAI,EAAE,CAAC;IACpE,CAAC;CACD"}
