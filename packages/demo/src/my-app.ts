@@ -20,6 +20,7 @@ export class MyApp {
   async attached() {
     await this.login();
     await this.callLookupsApi();
+    await this.testManuallyConfiguredEndpoint();
   }
 
   public message = 'Hello World!';
@@ -54,6 +55,13 @@ export class MyApp {
     console.log('post with IRestRequest');
     const resp4 = await rest.post({ resource: '/typeaheads', body: req });
     console.log(resp4);
+  }
+
+  private async testManuallyConfiguredEndpoint() {
+    const rest = this.Reg.getEndpoint('manuallyConfiguredEndpoint');
+
+    const resp1 = await rest.find('/ba/entities?pageSize=3');
+    console.log(resp1);
   }
 
   private async login() {

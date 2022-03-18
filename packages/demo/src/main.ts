@@ -8,7 +8,9 @@ import { AureliaAuthConfiguration } from '@starnetbih/au2-auth';
 Aurelia
   .register(
     AureliaConfigurationConfiguration,
-    AureliaAuthConfiguration.configure({responseTokenProp: 'bearerToken'}),
-    AureliaApiConfiguration
+    AureliaAuthConfiguration.configure({ responseTokenProp: 'bearerToken' }),
+    AureliaApiConfiguration.configure(cfg => {
+      cfg.registerEndpoint('manuallyConfiguredEndpoint', 'https://api.daas.selfip.net');
+    })
   ).app(MyApp)
   .start();

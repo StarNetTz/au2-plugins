@@ -66,7 +66,7 @@ export class MyApp {
 
     async attached() {
          let rest = this.Reg.getEndpoint('myApi1');
-         let resp = await rest.find({ resource: '/ba/entities?pageSize=10' });
+         let resp = await rest.find('/ba/entities?pageSize=10');
          console.log(resp);
 
          let req = {
