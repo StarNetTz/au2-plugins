@@ -13,9 +13,9 @@ This library is a based on aurelia2-auth plugin and previous work done by SpoonX
 Inside of your main.ts/main.js file register the plugin on the register method:
 
 ```js
-import { AureliaAuthPlugin } from '@starnetbih/au2-auth';
+import { AureliaAuthConfiguration } from '@starnetbih/au2-auth';
 
-Aurelia.register(AureliaConfigurationConfiguration); 
+Aurelia.register(AureliaAuthConfiguration); 
 
 //Or configure
 Aurelia.register(

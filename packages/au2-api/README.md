@@ -23,16 +23,16 @@ It depends on **au2-configuration** and **au2-auth** modules for configuration a
 Inside of your main.ts/main.js file register the plugin on the register method:
 
 ```js
-import { ApiPlugin } from '@starnetbih/au2-api';
+import { AureliaApiConfiguration } from '@starnetbih/au2-api';
 
 /* Configure in code */
-Aurelia.register(ApiPlugin.configure(cfg => {
+Aurelia.register(AureliaApiConfiguration.configure(cfg => {
         cfg.registerEndpoint('myApi1', '/mypath');
         cfg.registerEndpoint('myApi2', '/otherpath', { headers: {'Content-Type':'x-www-form-urlencoded'}});
     }));
 
 /* Or configure by convention, using au2-configuration plugin */
-Aurelia.register(ApiPlugin); 
+Aurelia.register(AureliaApiConfiguration); 
 ```
 
 #### Configure using configuration
