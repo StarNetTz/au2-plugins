@@ -6,7 +6,6 @@ const winStub = {
     location:{
         protocol:'zttp://api.com'
     }
-
 };
 
 test('Passes', async () => {
