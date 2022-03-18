@@ -1,11 +1,11 @@
-import { IAppConfiguration } from '@starnetbih/au2-configuration';
+import { IAureliaConfiguration } from '@starnetbih/au2-configuration';
 import { IApiRegistry } from '@starnetbih/au2-api';
 import { IAuthService } from '@starnetbih/au2-auth';
 import { IEventAggregator } from 'aurelia';
 
 export class MyApp {
   constructor(
-    @IAppConfiguration private Configuration: IAppConfiguration,
+    @IAureliaConfiguration private Configuration: IAureliaConfiguration,
     @IApiRegistry private Reg: IApiRegistry,
     @IAuthService private Auth: IAuthService,
     @IEventAggregator readonly EventAggregator: IEventAggregator
@@ -24,22 +24,23 @@ export class MyApp {
 
   public message = 'Hello World!';
 
-  private async callLookupsApi() {
-    let rest = this.Reg.getEndpoint('lookupsApi');
 
-    let resp1 = await rest.find('/ba/entities?pageSize=10');
+  private async callLookupsApi() {
+    const rest = this.Reg.getEndpoint('lookupsApi');
+
+    const resp1 = await rest.find('/ba/entities?pageSize=10');
     console.log('find with string');
     console.log(resp1);
 
     console.log('find with IRestRequest');
-    let resp2 = await rest.find({ resource: '/ba/entities?pageSize=10' });
+    const resp2 = await rest.find({ resource: '/ba/entities?pageSize=10' });
     console.log(resp2);
 
     console.log('find with IRestRequest and criteria');
-    let resp3 = await rest.find({ resource: '/ba/entities', idOrCriteria: { pageSize: 10 } });
+    const resp3 = await rest.find({ resource: '/ba/entities', idOrCriteria: { pageSize: 10 } });
     console.log(resp3);
 
-    let req = {
+    const req = {
       currentPage: 0,
       pageSize: 10,
       qry: {
@@ -51,13 +52,14 @@ export class MyApp {
     };
 
     console.log('post with IRestRequest');
-    let resp4 = await rest.post({ resource: '/typeaheads', body: req });
+    const resp4 = await rest.post({ resource: '/typeaheads', body: req });
     console.log(resp4);
   }
 
   private async login() {
-    let u = await this.Auth.login({
+    await this.Auth.login({
       credentials: { username: "admin", password: "admin" }
     });
   }
+
 }

@@ -1,41 +1,41 @@
 {
   "name": "@starnetbih/demo",
   "description": "An Aurelia plugin test application",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "repository": {
     "type": "git",
     "url": "???"
   },
   "license": "MIT",
   "dependencies": {
-    "@starnetbih/au2-api": "0.1.8",
-    "@starnetbih/au2-configuration": "0.1.8",
-    "@starnetbih/au2-auth": "0.1.8",
-    "aurelia": "^2.0.0-alpha.25"
+    "@starnetbih/au2-configuration": "0.2.0",
+    "@starnetbih/au2-auth": "0.2.0",
+    "@starnetbih/au2-api": "0.2.0",
+    "aurelia": "latest"
   },
   "keywords": [
     "aurelia",
     "aurelia2"
   ],
   "devDependencies": {
-    "@aurelia/testing": "^2.0.0-alpha.25",
-    "@aurelia/webpack-loader": "^2.0.0-alpha.25",
+    "@aurelia/testing": "latest",
+    "@aurelia/webpack-loader": "latest",
     "@types/node": "^17.0.10",
-    "@typescript-eslint/eslint-plugin": "^5.10.0",
-    "@typescript-eslint/parser": "^5.10.0",
+    "@typescript-eslint/eslint-plugin": "^5.15.0",
+    "@typescript-eslint/parser": "^5.15.0",
     "autoprefixer": "^10.4.2",
     "copy-webpack-plugin": "^10.2.4",
     "css-loader": "^6.5.1",
     "dotenv-webpack": "^7.0.3",
-    "eslint": "^8.7.0",
+    "eslint": "^8.11.0",
     "html-webpack-plugin": "^5.5.0",
-    "htmlhint": "^1.1.1",
+    "htmlhint": "^1.1.2",
     "postcss": "^8.4.5",
     "postcss-loader": "^6.2.1",
     "rimraf": "^3.0.2",
     "style-loader": "^3.3.1",
     "ts-loader": "^9.2.6",
-    "typescript": "^4.5.5",
+    "typescript": "^4.6.2",
     "webpack": "^5.67.0",
     "webpack-bundle-analyzer": "^4.5.0",
     "webpack-cli": "^4.9.1",

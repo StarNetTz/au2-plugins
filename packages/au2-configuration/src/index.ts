@@ -1,3 +1,3 @@
-export * from './AppConfiguration';
-export * from './AppConfigurationSettings';
-export * from './AppConfigurationPlugin';
+export * from './AureliaConfiguration';
+export * from './AureliaConfigurationOptions';
+export * from './AureliaConfigurationConfiguration';

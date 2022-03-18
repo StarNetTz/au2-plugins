@@ -1,6 +1,6 @@
 function trimDots(ary: string[]): void {
 	for (let i = 0; i < ary.length; ++i) {
-		let part = ary[i];
+		const part = ary[i];
 		if (part === '.') {
 			ary.splice(i, 1);
 			i -= 1;
@@ -28,8 +28,8 @@ function trimDots(ary: string[]): void {
 * @return The calculated path.
 */
 export function relativeToFile(name: string, file: string): string {
-	let fileParts = file && file.split('/');
-	let nameParts = name.trim().split('/');
+	const fileParts = file && file.split('/');
+	const nameParts = name.trim().split('/');
 
 	if (nameParts[0].charAt(0) === '.' && fileParts) {
 		//Convert file to array, and lop off the last part,
@@ -37,7 +37,7 @@ export function relativeToFile(name: string, file: string): string {
 		//module. For instance, file of 'one/two/three', maps to
 		//'one/two/three.js', but we want the directory, 'one/two' for
 		//this normalization.
-		let normalizedBaseParts = fileParts.slice(0, fileParts.length - 1);
+		const normalizedBaseParts = fileParts.slice(0, fileParts.length - 1);
 		nameParts.unshift(...normalizedBaseParts);
 	}
 
@@ -62,8 +62,8 @@ export function join(path1: string, path2: string): string {
 		return path1;
 	}
 
-	let schemeMatch = path1.match(/^([^/]*?:)\//);
-	let scheme = (schemeMatch && schemeMatch.length > 0) ? schemeMatch[1] : '';
+	const schemeMatch = path1.match(/^([^/]*?:)\//);
+	const scheme = (schemeMatch && schemeMatch.length > 0) ? schemeMatch[1] : '';
 	path1 = path1.substr(scheme.length);
 
 	let urlPrefix;
@@ -77,11 +77,11 @@ export function join(path1: string, path2: string): string {
 		urlPrefix = '';
 	}
 
-	let trailingSlash = path2.slice(-1) === '/' ? '/' : '';
+	const trailingSlash = path2.slice(-1) === '/' ? '/' : '';
 
-	let url1 = path1.split('/');
-	let url2 = path2.split('/');
-	let url3 = [];
+	const url1 = path1.split('/');
+	const url2 = path2.split('/');
+	const url3 = [];
 
 	for (let i = 0, ii = url1.length; i < ii; ++i) {
 		if (url1[i] === '..') {
@@ -117,8 +117,8 @@ export function join(path1: string, path2: string): string {
 	return scheme + urlPrefix + url3.join('/') + trailingSlash;
 }
 
-let encode = encodeURIComponent;
-let encodeKey = k => encode(k).replace('%24', '$');
+const encode = encodeURIComponent;
+const encodeKey = k => encode(k).replace('%24', '$');
 /**
 * Recursively builds part of query string for parameter.
 *
@@ -137,12 +137,12 @@ function buildParam(key: string, value: any, traditional?: boolean): Array<strin
 			if (traditional) {
 				result.push(`${encodeKey(key)}=${encode(value[i])}`);
 			} else {
-				let arrayKey = key + '[' + (typeof value[i] === 'object' && value[i] !== null ? i : '') + ']';
+				const arrayKey = key + '[' + (typeof value[i] === 'object' && value[i] !== null ? i : '') + ']';
 				result = result.concat(buildParam(arrayKey, value[i]));
 			}
 		}
 	} else if (typeof (value) === 'object' && !traditional) {
-		for (let propertyName in value) {
+		for (const propertyName in value) {
 			result = result.concat(buildParam(key + '[' + propertyName + ']', value[propertyName]));
 		}
 	} else {
@@ -160,9 +160,9 @@ function buildParam(key: string, value: any, traditional?: boolean): Array<strin
 */
 export function buildQueryString(params?: Object, traditional?: boolean): string {
 	let pairs = [];
-	let keys = Object.keys(params || {}).sort();
+	const keys = Object.keys(params || {}).sort();
 	for (let i = 0, len = keys.length; i < len; i++) {
-		let key = keys[i];
+		const key = keys[i];
 		pairs = pairs.concat(buildParam(key, params[key], traditional));
 	}
 
@@ -205,14 +205,14 @@ function processScalarParam(existedParam: Object, value: Object): Object {
 */
 function parseComplexParam(queryParams: Object, keys: (string | number)[], value: any): void {
 	let currentParams = queryParams;
-	let keysLastIndex = keys.length - 1;
+	const keysLastIndex = keys.length - 1;
 	for (let j = 0; j <= keysLastIndex; j++) {
-		let key = keys[j] === '' ? (currentParams as any).length : keys[j];
+		const key = keys[j] === '' ? (currentParams as any).length : keys[j];
 		preventPollution(key);
 		if (j < keysLastIndex) {
 			// The value has to be an array or a false value
 			// It can happen that the value is no array if the key was repeated with traditional style like `list=1&list[]=2`
-			let prevValue = !currentParams[key] || typeof currentParams[key] === 'object' ? currentParams[key] : [currentParams[key]];
+			const prevValue = !currentParams[key] || typeof currentParams[key] === 'object' ? currentParams[key] : [currentParams[key]];
 			currentParams = currentParams[key] = prevValue || (isNaN(keys[j + 1] as number) ? {} : []);
 		} else {
 			currentParams = currentParams[key] = value;
@@ -228,7 +228,7 @@ function parseComplexParam(queryParams: Object, keys: (string | number)[], value
 * @returns Object with keys and values mapped from the query string.
 */
 export function parseQueryString(queryString: string): Object {
-	let queryParams = {};
+	const queryParams = {};
 	if (!queryString || typeof queryString !== 'string') {
 		return queryParams;
 	}
@@ -238,10 +238,10 @@ export function parseQueryString(queryString: string): Object {
 		query = query.substr(1);
 	}
 
-	let pairs = query.replace(/\+/g, ' ').split('&');
+	const pairs = query.replace(/\+/g, ' ').split('&');
 	for (let i = 0; i < pairs.length; i++) {
-		let pair = pairs[i].split('=');
-		let key = decodeURIComponent(pair[0]);
+		const pair = pairs[i].split('=');
+		const key = decodeURIComponent(pair[0]);
 		if (!key) {
 			continue;
 		}
@@ -261,7 +261,7 @@ export function parseQueryString(queryString: string): Object {
 		}
 
 		if (pair.length >= 2) {
-			let value = pair[1] ? decodeURIComponent(pair[1]) : '';
+			const value = pair[1] ? decodeURIComponent(pair[1]) : '';
 			if (keysLastIndex) {
 				parseComplexParam(queryParams, keys, value);
 			} else {
