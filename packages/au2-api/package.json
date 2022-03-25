@@ -8,6 +8,9 @@
         "api"
     ],
     "main": "dist/index.js",
+    "files": [
+        "dist"
+      ],
     "module": "dist/aurelia-plugin.es.js",
     "browser": "dist/aurelia-plugin.bundle.js",
     "types": "dist/index.d.ts",
