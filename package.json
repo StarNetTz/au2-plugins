@@ -1,7 +1,7 @@
 {
   "name": "@starnetbih/monorepo",
-  "private": true,
-  "version": "0.2.2",
+  "private": false,
+  "version": "0.2.3",
   "workspaces": [
     "packages/**"
   ],
