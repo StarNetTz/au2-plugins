@@ -1,5 +1,5 @@
 import { IAureliaConfiguration } from '@starnetbih/au2-configuration';
-import { IApiRegistry } from '@starnetbih/au2-api';
+import { IApiRegistry, IApiEndpoints } from '@starnetbih/au2-api';
 import { IAuthService } from '@starnetbih/au2-auth';
 import { IEventAggregator } from 'aurelia';
 
@@ -8,7 +8,8 @@ export class MyApp {
     @IAureliaConfiguration private Configuration: IAureliaConfiguration,
     @IApiRegistry private Reg: IApiRegistry,
     @IAuthService private Auth: IAuthService,
-    @IEventAggregator readonly EventAggregator: IEventAggregator
+    @IEventAggregator readonly EventAggregator: IEventAggregator,
+    @IApiEndpoints private ApiEndpoints: IApiEndpoints,
   ) {
     this.EventAggregator.subscribe("auth:login", (msg, chn) => {
       console.log(`${(msg as any).displayName} just logged in!`);
@@ -18,9 +19,10 @@ export class MyApp {
   }
 
   async attached() {
-    await this.login();
-    await this.callLookupsApi();
-    await this.testManuallyConfiguredEndpoint();
+    //await this.login();
+    await this.testjsonplaceholderEndpoint();
+   // await this.callLookupsApi();
+    //await this.testManuallyConfiguredEndpoint();
   }
 
   public message = 'Hello World!';
@@ -63,7 +65,13 @@ export class MyApp {
     const resp1 = await rest.find('/ba/entities?pageSize=3');
     console.log(resp1);
   }
+  
+  private async testjsonplaceholderEndpoint() {
+    const rest = this.ApiEndpoints.getEndpoint('jsonplaceholderApi');
 
+    const resp1 = await rest.find('/posts/1');
+    console.log(resp1);
+  }
   private async login() {
     await this.Auth.login({
       credentials: { username: "admin", password: "admin" }

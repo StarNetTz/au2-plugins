@@ -3,7 +3,6 @@ import { Rest } from './Rest';
 import { IContainer, Registration, DI } from '@aurelia/kernel';
 import { AppTask } from '@aurelia/runtime-html';
 import { IAureliaConfiguration } from '@starnetbih/au2-configuration';
-import { Authentication, IAuthConfigOptions } from '@starnetbih/au2-auth';
 
 export interface RestOptions {
 	/**
@@ -135,28 +134,16 @@ export class ApiRegistry implements IApiRegistry {
 		container.register(Registration.singleton(IApiRegistry, this));
 		container.register(
 			AppTask.beforeActivate(IApiRegistry, async plugin => {
-				await ApiRegistry.RegisterFromConfigFileAndAddAuthIntercetor(container, plugin);
+				await ApiRegistry.RegisterFromConfigFile(container, plugin);
 			}));
 	}
 
-	private static async RegisterFromConfigFileAndAddAuthIntercetor(container: IContainer, plugin: IApiRegistry) {
+	private static async RegisterFromConfigFile(container: IContainer, plugin: IApiRegistry) {
 		const cfgProvider = container.get(IAureliaConfiguration);
 		const cnf = await cfgProvider.get('au2-api');
-		const aut = container.get(Authentication);
-		const autoptions = container.get(IAuthConfigOptions);
 		if (cnf) {
 			for (const key of Object.keys(cnf)) {
-				if (key == "authApi") {
-					if (autoptions)
-						autoptions.baseUrl = cnf[key].url;
-				}
-				else {
-					plugin.registerEndpoint(key, cnf[key].url);
-					if (cnf[key].auth) {
-						const rst = plugin.endpoints[key] as Rest;
-						rst.addInterceptor(aut.tokenInterceptor);
-					}
-				}
+				plugin.registerEndpoint(key, cnf[key].url);
 			}
 		}
 	}

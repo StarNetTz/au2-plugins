@@ -43,14 +43,14 @@ export class Authentication {
   }
 
   getPayload() {
-    let token = this.storage.get(this.tokenName);
+    const token = this.storage.get(this.tokenName);
     return this.decomposeToken(token);
   }
 
   decomposeToken(token) {
     if (token && token.split('.').length === 3) {
-      let base64Url = token.split('.')[1];
-      let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
 
       try {
         return JSON.parse(decodeURIComponent(escape(window.atob(base64))));
@@ -66,7 +66,7 @@ export class Authentication {
 
   setToken(response, redirect?) {
     // access token handling
-    let accessToken = response && response[this.config.responseTokenProp];
+    const accessToken = response && response[this.config.responseTokenProp];
     let tokenToStore;
     
     if (accessToken) {
@@ -87,7 +87,7 @@ export class Authentication {
     }
 
     // id token handling
-    let idToken = response && response[this.config.responseIdTokenProp];
+    const idToken = response && response[this.config.responseIdTokenProp];
 
     if (idToken) {
       this.storage.set(this.idTokenName, idToken);
@@ -105,7 +105,7 @@ export class Authentication {
   }
 
   isAuthenticated() {
-    let token = this.storage.get(this.tokenName);
+    const token = this.storage.get(this.tokenName);
 
     // There's no token, so user is not authenticated.
     if (!token) {
@@ -119,8 +119,8 @@ export class Authentication {
 
     let exp;
     try {
-      let base64Url = token.split('.')[1];
-      let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
       exp = JSON.parse(window.atob(base64)).exp;
     } catch (error) {
       return false;
@@ -148,13 +148,13 @@ export class Authentication {
   }
 
   get tokenInterceptor() {
-    let config = this.config;
-    let storage = this.storage;
-    let auth = this;
+    const config = this.config;
+    const storage = this.storage;
+    const auth = this;
     return {
       request(request) {
         if (auth.isAuthenticated() && config.httpInterceptor) {
-          let tokenName = config.tokenPrefix ? `${config.tokenPrefix}_${config.tokenName}` : config.tokenName;
+          const tokenName = config.tokenPrefix ? `${config.tokenPrefix}_${config.tokenName}` : config.tokenName;
           let token = storage.get(tokenName);
 
           if (config.authHeader && config.authToken) {

@@ -6,6 +6,10 @@
 		"lookupsApi": {
 			"url": "https://api.daas.selfip.net",
 			"auth": true
+		},
+		"jsonplaceholderApi": {
+			"url": "https://jsonplaceholder.typicode.com",
+			"auth": true
 		}
 	}
 }
