@@ -9,6 +9,7 @@ export interface IRestRequest {
 	responseOutput?: { response: Response }
 
 }
+
 export interface IRest {
 	find(req: string | IRestRequest): Promise<unknown | Error>;
 
@@ -18,7 +19,7 @@ export interface IRest {
 }
 
 export class Rest implements IRest {
-	defaults: object = {
+	defaults: RequestInit = {
 		headers: {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json'

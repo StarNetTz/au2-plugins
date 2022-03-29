@@ -1,26 +1,27 @@
-import { BrowserPlatform } from '@aurelia/platform-browser';
-import { setPlatform } from '@aurelia/testing';
-import {ApiEndpoints} from '../src/ApiEndpoints'
+import {ApiEndpoints} from '../src/ApiEndpoints';
+import {IRestFactory} from '../src/RestFactory'
+import * as sinon from "ts-sinon";
+import { IRest, Rest } from '../src/Rest';
 
+const stubInterface = sinon.stubInterface;
 
-const platform = new BrowserPlatform(window);
-setPlatform(platform);
-BrowserPlatform.set(globalThis, platform);
-import { assert } from '@aurelia/testing';
-import { Rest } from '../src/Rest';
-
-// An assumption is being made you called the code defined in the first part
-// of these docs to set up the environment.
-
-describe('Endpoints tests', function() {
-    it('Should register endpoint', async function() {
-        const eps = new ApiEndpoints();
-
-        eps.registerEndpoint('authApi', 'https://www.authapi.com');
-
-        const apiEndpoint = eps.getEndpoint('authApi');
-
-        assert.instanceOf(apiEndpoint, Rest);
+describe('ApiEndpoints tests', function() {
+    test('Should instantiate ApiEndpoints', async function() {
+       const apis = new ApiEndpoints(createRestFactoryMock());
+       apis.registerEndpoint('myApi', 'http://my-api.com');
     });
 });
+
+function createRestFactoryMock(){
+    const testStub = stubInterface<IRestFactory>()
+    
+    testStub.create.returns(createRestMock());
+    return testStub;
+}
+
+function createRestMock(){
+    const testStub = stubInterface<IRest>()
+   
+    return testStub;
+}
 
