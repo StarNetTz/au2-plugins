@@ -36,7 +36,12 @@ export class Rest implements IRest {
 		if (typeof (req) == 'string') 
 			return this.request('GET', this.getRequestPath(req, this.useTraditionalUriTemplates));
 		else 
-			return this.request('GET', this.getRequestPath(req.resource, this.useTraditionalUriTemplates, req.idOrCriteria), undefined, req.options, req.responseOutput);
+		{
+			const path = this.getRequestPath(req.resource, this.useTraditionalUriTemplates, req.idOrCriteria);
+			console.log(path);
+			return this.request('GET', path , undefined, req.options, req.responseOutput);
+		}
+			
 	}
 
 		getRequestPath(resource: string, traditional: boolean, idOrCriteria?: string | number | {}, criteria?: {}) {

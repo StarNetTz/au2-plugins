@@ -5,14 +5,13 @@ import { AppTask } from '@aurelia/runtime-html';
 import { IAureliaConfiguration } from '@starnetbih/au2-configuration';
 import { IRestFactory } from 'RestFactory';
 
-
 /**
 * ApiEndpoints class. Configures and stores endpoints
 */
 export interface IApiEndpoints {
-	registerEndpoint(name: string, url: string): IApiEndpoints;
-	registerEndpointUsingCallback(name: string, configureCb: (settings: HttpClientConfiguration) => HttpClientConfiguration, defaults?: RequestInit): IApiEndpoints;
-	getEndpoint(name: string): IRest;
+	register(name: string, url: string): IApiEndpoints;
+	registerUsingCallback(name: string, configureCb: (settings: HttpClientConfiguration) => HttpClientConfiguration, defaults?: RequestInit): IApiEndpoints;
+	get(name: string): IRest;
 
 }
 
@@ -25,17 +24,17 @@ export class ApiEndpoints implements IApiEndpoints {
 		this.endpoints = new Map<string, IRest>();
 	}
 
-	getEndpoint(name: string): IRest {
+	get(name: string): IRest {
 		return this.endpoints.get(name);
 	}
 
-	registerEndpoint(name: string, url: string, defaults?: RequestInit): IApiEndpoints {
+	register(name: string, url: string, defaults?: RequestInit): IApiEndpoints {
 		const rest = this.RestFactory.create(name, url, defaults);
 		this.endpoints.set(name, rest);
 		return this;
 	}
 
-	registerEndpointUsingCallback(name: string, configureCb: (settings: HttpClientConfiguration) => HttpClientConfiguration, defaults?: RequestInit): IApiEndpoints {
+	registerUsingCallback(name: string, configureCb: (settings: HttpClientConfiguration) => HttpClientConfiguration, defaults?: RequestInit): IApiEndpoints {
 		const rest = this.RestFactory.createUsingCallback(name, configureCb, defaults);
 		this.endpoints.set(name, rest);
 		return this;
@@ -54,7 +53,7 @@ export class ApiEndpoints implements IApiEndpoints {
 		const cnf = await cfgProvider.get('au2-api');
 		if (cnf) {
 			for (const key of Object.keys(cnf)) {
-				plugin.registerEndpoint(key, cnf[key].url);
+				plugin.register(key, cnf[key].url);
 			}
 		}
 	}

@@ -2,19 +2,23 @@
     "name": "@starnetbih/au2-configuration",
     "version": "0.2.3",
     "description": "Configuration (app settings) plugin for aurelia 2 (alpha)",
+    "main": "dist/index.js",
+    "module": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "files": [
+        "dist",
+        "src",
+        "README.md",
+        "CHANGELOG.md",
+        "LICENSE"
+    ],
     "keywords": [
         "aurelia",
         "plugin",
         "config",
         "configuration"
     ],
-    "main": "dist/index.js",
-    "files": [
-        "dist"
-      ],
-    "module": "dist/aurelia-plugin.es.js",
-    "browser": "dist/aurelia-plugin.bundle.js",
-    "types": "dist/index.d.ts",
+
     "repository": {
         "type": "git",
         "url": "https://github.com/StarNetTz/au2-plugins.git",
@@ -23,7 +27,7 @@
     "license": "MIT",
     "scripts": {
         "lint:js": "eslint src test --ext .js,.ts",
-        "build": "rimraf dist && rollup -c && tsc",
+        "build": "rimraf dist && rollup -c",
         "build:watch": "rollup -cw",
         "test": "jest",
         "test:coverage": "jest --coverage",

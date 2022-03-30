@@ -26,6 +26,7 @@
         "build:watch": "rollup -cw",
         "test": "jest",
         "test:coverage": "jest --coverage",
+        "test:watch": "jest --watch",
         "can:release": "npm run build && npm run test"
     },
     "devDependencies": {
