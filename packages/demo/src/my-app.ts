@@ -1,12 +1,11 @@
 import { IAureliaConfiguration } from '@starnetbih/au2-configuration';
-import { IApiRegistry, IApiEndpoints } from '@starnetbih/au2-api';
-import { IAuthService } from '@starnetbih/au2-auth';
+import { IApiEndpoints } from '@starnetbih/au2-api';
+import { IAuthService } from '@starnetbih/au2-servicestack-auth';
 import { IEventAggregator } from 'aurelia';
 
 export class MyApp {
   constructor(
     @IAureliaConfiguration private Configuration: IAureliaConfiguration,
-    @IApiRegistry private Reg: IApiRegistry,
     @IAuthService private Auth: IAuthService,
     @IEventAggregator readonly EventAggregator: IEventAggregator,
     @IApiEndpoints private ApiEndpoints: IApiEndpoints,
@@ -14,14 +13,14 @@ export class MyApp {
     this.EventAggregator.subscribe("auth:login", (msg, chn) => {
       console.log(`${(msg as any).displayName} just logged in!`);
       console.log(`Payload:`);
-      console.log(this.Auth.getTokenPayload());
+      //console.log(this.Auth.getTokenPayload());
     })
   }
 
   async attached() {
-    //await this.login();
-    await this.testjsonplaceholderEndpoint();
-   // await this.callLookupsApi();
+    await this.login();
+    //await this.testjsonplaceholderEndpoint();
+    await this.callLookupsApi();
     //await this.testManuallyConfiguredEndpoint();
   }
 
@@ -29,13 +28,13 @@ export class MyApp {
 
 
   private async callLookupsApi() {
-    const rest = this.Reg.getEndpoint('lookupsApi');
+    const rest = this.ApiEndpoints.get('lookupsApi');
 
     const resp1 = await rest.find('/ba/entities?pageSize=10');
     console.log('find with string');
     console.log(resp1);
 
-    console.log('find with IRestRequest');
+   /*  console.log('find with IRestRequest');
     const resp2 = await rest.find({ resource: '/ba/entities?pageSize=10' });
     console.log(resp2);
 
@@ -56,26 +55,29 @@ export class MyApp {
 
     console.log('post with IRestRequest');
     const resp4 = await rest.post({ resource: '/typeaheads', body: req });
-    console.log(resp4);
+    console.log(resp4); */
   }
 
   private async testManuallyConfiguredEndpoint() {
-    const rest = this.Reg.getEndpoint('manuallyConfiguredEndpoint');
+    const rest = this.ApiEndpoints.get('manuallyConfiguredEndpoint');
 
     const resp1 = await rest.find('/ba/entities?pageSize=3');
     console.log(resp1);
   }
   
   private async testjsonplaceholderEndpoint() {
-    const rest = this.ApiEndpoints.getEndpoint('jsonplaceholderApi');
+    const rest = this.ApiEndpoints.get('jsonplaceholderApi');
 
     const resp1 = await rest.find('/posts/1');
     console.log(resp1);
   }
   private async login() {
-    await this.Auth.login({
-      credentials: { username: "admin", password: "admin" }
-    });
+    //const prof = await this.Auth.signIn({ username: "admin", password: "admin" });
+
+    const authEndpoint = this.ApiEndpoints.get('authApi');
+		const resp = await authEndpoint.post({  resource:'/auth/credentials', body:{username:"admin", password:"admin"}, options : {credentials:"include"}}) as any;
+    console.log(resp);
+    const resp2 = await authEndpoint.find({  resource:'/users', options : {credentials:"include"}}) as any;
   }
 
 }

@@ -1,7 +1,7 @@
 {
-    "name": "@starnetbih/au2-configuration",
+    "name": "@starnetbih/au2-servicestack-auth",
     "version": "0.2.3",
-    "description": "Configuration (app settings) plugin for aurelia 2 (alpha)",
+    "description": "ServiceStack Auth plugin for aurelia 2 (alpha)",
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -12,16 +12,10 @@
         "CHANGELOG.md",
         "LICENSE"
     ],
-    "keywords": [
-        "aurelia",
-        "plugin",
-        "config",
-        "configuration"
-    ],
     "repository": {
         "type": "git",
         "url": "https://github.com/StarNetTz/au2-plugins.git",
-        "directory": "packages/au2-configuration"
+        "directory": "packages/au2-servicestack-auth"
     },
     "license": "MIT",
     "scripts": {
@@ -30,6 +24,7 @@
         "build:watch": "rollup -cw",
         "test": "jest",
         "test:coverage": "jest --coverage",
+        "test:watch": "jest --watch",
         "can:release": "npm run build && npm run test"
     },
     "devDependencies": {
@@ -62,6 +57,7 @@
     "dependencies": {
         "@aurelia/kernel": "latest",
         "@aurelia/runtime": "latest",
-        "@aurelia/runtime-html": "latest"
+        "@aurelia/runtime-html": "latest",
+        "@starnetbih/au2-api": "0.2.3"
     }
 }

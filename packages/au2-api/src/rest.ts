@@ -7,7 +7,6 @@ export interface IRestRequest {
 	body?: {};
 	options?: {};
 	responseOutput?: { response: Response }
-
 }
 
 export interface IRest {
