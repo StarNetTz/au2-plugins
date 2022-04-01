@@ -1,7 +1,8 @@
 {
 	"au2-api": {
 		"authApi": {
-			"url": "https://localhost:5010"
+			"url": "https://localhost:5010",
+			"auth": true
 		},
 		"lookupsApi": {
 			"url": "https://api.daas.selfip.net",
