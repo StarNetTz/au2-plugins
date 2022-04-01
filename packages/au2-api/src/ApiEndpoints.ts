@@ -5,9 +5,6 @@ import { AppTask } from '@aurelia/runtime-html';
 import { IAureliaConfiguration } from '@starnetbih/au2-configuration';
 import { IRestFactory } from 'RestFactory';
 
-/**
-* ApiEndpoints class. Configures and stores endpoints
-*/
 export interface IApiEndpoints {
 	register(name: string, url: string): IApiEndpoints;
 	registerUsingCallback(name: string, configureCb: (settings: HttpClientConfiguration) => HttpClientConfiguration, defaults?: RequestInit): IApiEndpoints;
@@ -20,7 +17,7 @@ export const IApiEndpoints = DI.createInterface<IApiEndpoints>('IApiEndpoints');
 export class ApiEndpoints implements IApiEndpoints {
 	endpoints: Map<string, IRest>;
 
-	constructor(@IRestFactory private RestFactory : IRestFactory) {
+	constructor(@IRestFactory private RestFactory: IRestFactory) {
 		this.endpoints = new Map<string, IRest>();
 	}
 
@@ -53,8 +50,23 @@ export class ApiEndpoints implements IApiEndpoints {
 		const cnf = await cfgProvider.get('au2-api');
 		if (cnf) {
 			for (const key of Object.keys(cnf)) {
-				plugin.register(key, cnf[key].url);
+				if (cnf[key].auth) {
+					plugin.registerUsingCallback(key, (cfg) => {
+						return cfg
+							.withBaseUrl(cnf[key].url)
+					}, this.defaultAuthClientOptions);
+				}
+				else
+					plugin.register(key, cnf[key].url);
 			}
 		}
 	}
+
+	static defaultAuthClientOptions: RequestInit = {
+		headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json'
+		}, 
+		credentials: "include"
+	};
 }

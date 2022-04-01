@@ -37,7 +37,6 @@ export class Rest implements IRest {
 		else 
 		{
 			const path = this.getRequestPath(req.resource, this.useTraditionalUriTemplates, req.idOrCriteria);
-			console.log(path);
 			return this.request('GET', path , undefined, req.options, req.responseOutput);
 		}
 			

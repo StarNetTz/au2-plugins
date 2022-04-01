@@ -11,7 +11,6 @@ export interface IUserProfile {
 	displayName: string;
 	roles: string[];
 	permissions: string[];
-
 }
 
 export interface IAuthService {
@@ -26,7 +25,7 @@ export class AuthService implements IAuthService {
 	
 	async signIn(credentials: Partial<ICredentials>): Promise<IUserProfile> {
 		const authEndpoint = this.ApiEndpoints.get('authApi');
-		const resp = await authEndpoint.post({ resource:'/auth/credentials', body:credentials, options : {credentials:"include"}}) as IUserProfile;
+		const resp = await authEndpoint.post({ resource:'/auth/credentials', body:credentials}) as IUserProfile;
 		return resp;
 	}
 }

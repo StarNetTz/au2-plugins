@@ -2,6 +2,7 @@ import { IAureliaConfiguration } from '@starnetbih/au2-configuration';
 import { IApiEndpoints } from '@starnetbih/au2-api';
 import { IAuthService } from '@starnetbih/au2-servicestack-auth';
 import { IEventAggregator } from 'aurelia';
+import { JsonServiceClient } from "@servicestack/client"
 
 export class MyApp {
   constructor(
@@ -20,8 +21,9 @@ export class MyApp {
   async attached() {
     await this.login();
     //await this.testjsonplaceholderEndpoint();
-    await this.callLookupsApi();
+    //await this.callLookupsApi();
     //await this.testManuallyConfiguredEndpoint();
+    await this.testHello5001();
   }
 
   public message = 'Hello World!';
@@ -34,8 +36,8 @@ export class MyApp {
     console.log('find with string');
     console.log(resp1);
 
-   /*  console.log('find with IRestRequest');
-    const resp2 = await rest.find({ resource: '/ba/entities?pageSize=10' });
+    console.log('find with IRestRequest');
+    const resp2 = await rest.find({ resource: '/ba/entities?pageSize=10', options : {credentials:"include"} });
     console.log(resp2);
 
     console.log('find with IRestRequest and criteria');
@@ -55,7 +57,7 @@ export class MyApp {
 
     console.log('post with IRestRequest');
     const resp4 = await rest.post({ resource: '/typeaheads', body: req });
-    console.log(resp4); */
+    console.log(resp4); 
   }
 
   private async testManuallyConfiguredEndpoint() {
@@ -65,19 +67,29 @@ export class MyApp {
     console.log(resp1);
   }
   
+
+  private async testHello5001() {
+    const rest = this.ApiEndpoints.get('securedHelloApi');
+    const resp1 = await rest.find({  resource:'/hello/zeko'});
+    console.log(resp1);
+  }
+  
+
   private async testjsonplaceholderEndpoint() {
     const rest = this.ApiEndpoints.get('jsonplaceholderApi');
 
     const resp1 = await rest.find('/posts/1');
     console.log(resp1);
   }
+
   private async login() {
     //const prof = await this.Auth.signIn({ username: "admin", password: "admin" });
 
     const authEndpoint = this.ApiEndpoints.get('authApi');
 		const resp = await authEndpoint.post({  resource:'/auth/credentials', body:{username:"admin", password:"admin"}, options : {credentials:"include"}}) as any;
     console.log(resp);
-    const resp2 = await authEndpoint.find({  resource:'/users', options : {credentials:"include"}}) as any;
+   // const resp2 = await authEndpoint.find({  resource:'/users', options : {credentials:"include"}}) as any;
   }
 
+ 
 }
