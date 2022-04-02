@@ -84,7 +84,7 @@ export class MyApp {
 
   private async login() {
     await this.Auth.signIn({ username: "admin", password: "admin" });
-    setTimeout(async ()=> await this.Auth.signOut(), 500);
+    //setTimeout(async ()=> await this.Auth.signOut(), 500);
     
     //const authEndpoint = this.ApiEndpoints.get('authApi');
 		//await authEndpoint.post({  resource:'/auth/credentials', body:{username:"admin", password:"admin"}, options : {credentials:"include"}});
