@@ -8,9 +8,9 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@starnetbih/au2-configuration": "0.2.3",
-    "@starnetbih/au2-servicestack-auth": "0.2.3",
-    "@starnetbih/au2-api": "0.2.3",
+    "@starnetbih/au2-configuration": "0.2.4",
+    "@starnetbih/au2-servicestack-auth": "0.2.4",
+    "@starnetbih/au2-api": "0.2.4",
     "aurelia": "latest"
   },
   "keywords": [

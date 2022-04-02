@@ -1,44 +1,61 @@
-# au2-auth
+# au2-servicestack-auth
 
-This library is a based on aurelia2-auth plugin and previous work done by SpoonX.
+Aurelia 2 auth library for servicestack. JWT Tokens are maintained via Secure HttpOnly Cookies.
+This plugin depends on:
+- @starnetbih/au2-configuration
+- @starnetbih/au2-api
+
+Make sure that your src directory contains **config** directory with **config.json** file in it.
+So:
+
+- app
+  - src
+    - config
+      - config.json
+
+Add 'au2-api' section with key 'authApi' with url and auth set to true.
+
+config.json example
+
+```js
+{
+ "au2-api": {
+  "authApi": {
+   "url": "https://localhost:5010",
+   "auth": true
+  }
+ }
+}
+```
 
 **Full disclosure**: this plugin is in alpha stage. Use at your own risk.
 
 ## Installation
 
-`npm install @starnetbih/au2-auth` or `yarn add @starnetbih/au2-auth`
-
-## Configuration
-
-Inside of your main.ts/main.js file register the plugin on the register method:
-
-```js
-import { AureliaAuthConfiguration } from '@starnetbih/au2-auth';
-
-Aurelia.register(AureliaAuthConfiguration); 
-
-//Or configure
-Aurelia.register(
-     AureliaAuthConfiguration.configure({responseTokenProp: 'bearerToken'})
-);
-
-
-```
+`npm install @starnetbih/au2-servicestack-auth` or `yarn add @starnetbih/au2-servicestack-auth`
 
 ## Usage
 
 ```js
-import { IAppConfiguration } from '@starnetbih/au2-auth';
+import { IAuthService, IUserProfile, SS_AUTH_CHANNEL_SIGNED_IN, SS_AUTH_CHANNEL_SIGNED_OUT } from '@starnetbih/au2-servicestack-auth';
+import { IEventAggregator } from 'aurelia';
 
 export class MyApp {
-
-    constructor( @IAuthService private Auth: IAuthService ) { }
+ constructor(
+    @IAuthService private Auth: IAuthService,
+    @IEventAggregator readonly EventAggregator: IEventAggregator) {
+        this.EventAggregator.subscribe(SS_AUTH_CHANNEL_SIGNED_IN, (usr) => {
+            console.log(`${(usr as IUserProfile).displayName} signed in!`);
+            console.log(usr);
+        });
+        this.EventAggregator.subscribe(SS_AUTH_CHANNEL_SIGNED_OUT, () => {
+            console.log('User signed out');
+        });
+    }
 
     async attached() {
-        let resp = await this.Auth.login({
-            credentials: { username: "admin", password: "admin" }
-        });
-        console.log(this.Auth.getTokenPayload());
+       await this.Auth.signIn({ username: "admin", password: "admin" });
+       await this.Auth.signOut();
     }
 }
 ```

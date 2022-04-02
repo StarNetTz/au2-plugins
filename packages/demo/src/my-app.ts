@@ -1,8 +1,7 @@
 import { IAureliaConfiguration } from '@starnetbih/au2-configuration';
 import { IApiEndpoints } from '@starnetbih/au2-api';
-import { IAuthService, IUserProfile, SS_AUTH_CHANNEL_SIGNED_IN } from '@starnetbih/au2-servicestack-auth';
+import { IAuthService, IUserProfile, SS_AUTH_CHANNEL_SIGNED_IN, SS_AUTH_CHANNEL_SIGNED_OUT } from '@starnetbih/au2-servicestack-auth';
 import { IEventAggregator } from 'aurelia';
-import { JsonServiceClient } from "@servicestack/client";
 
 export class MyApp {
   constructor(
@@ -11,16 +10,18 @@ export class MyApp {
     @IEventAggregator readonly EventAggregator: IEventAggregator,
     @IApiEndpoints private ApiEndpoints: IApiEndpoints
   ) {
-    this.EventAggregator.subscribe(SS_AUTH_CHANNEL_SIGNED_IN, (msg, chn) => {
-      console.log(`${(msg as IUserProfile).displayName} just logged in!`);
-      console.log(msg);
-      //console.log(this.Auth.getTokenPayload());
-    })
+    this.EventAggregator.subscribe(SS_AUTH_CHANNEL_SIGNED_IN, (usr) => {
+      console.log(`${(usr as IUserProfile).displayName} signed in!`);
+      console.log(usr);
+    });
+    this.EventAggregator.subscribe(SS_AUTH_CHANNEL_SIGNED_OUT, () => {
+      console.log('User signed out');
+    });
   }
 
   async attached() {
     await this.login();
-    //await this.testjsonplaceholderEndpoint();
+    await this.testjsonplaceholderEndpoint();
     //await this.callLookupsApi();
     //await this.testManuallyConfiguredEndpoint();
     await this.testHello5001();
@@ -67,7 +68,6 @@ export class MyApp {
     console.log(resp1);
   }
   
-
   private async testHello5001() {
     const rest = this.ApiEndpoints.get('securedHelloApi');
     const resp1 = await rest.find({  resource:'/hello/zeko'});
@@ -84,7 +84,7 @@ export class MyApp {
 
   private async login() {
     await this.Auth.signIn({ username: "admin", password: "admin" });
-    //setTimeout(async ()=> await this.Auth.signOut(), 500);
+    //await this.Auth.signOut();
     
     //const authEndpoint = this.ApiEndpoints.get('authApi');
 		//await authEndpoint.post({  resource:'/auth/credentials', body:{username:"admin", password:"admin"}, options : {credentials:"include"}});
