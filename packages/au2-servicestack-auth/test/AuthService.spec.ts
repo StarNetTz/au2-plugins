@@ -8,9 +8,9 @@ import * as sinon from "ts-sinon";
 const stubInterface = sinon.stubInterface;
 
 function createIApiEndpointsMock() {
-    const testStub = stubInterface<IApiEndpoints>();
-    testStub.get.returns(createIRestMock());
-    return testStub;
+    const testMock = stubInterface<IApiEndpoints>();
+    testMock.get.returns(createIRestMock());
+    return testMock;
 }
 
 async function getCredentialsMock() {
@@ -27,16 +27,16 @@ async function getCredentialsMock() {
 }
 
 function createIRestMock() {
-    const testStub = stubInterface<IRest>();
+    const testMock = stubInterface<IRest>();
     let credentials = getCredentialsMock();
-    testStub.post.returns(credentials);
-    testStub.find.returns(credentials);
-    return testStub;
+    testMock.post.returns(credentials);
+    testMock.find.returns(credentials);
+    return testMock;
 }
 
 function createIEventAggregatorMock() {
-    const testStub = stubInterface<IEventAggregator>();
-    return testStub;
+    const testMock = stubInterface<IEventAggregator>();
+    return testMock;
 }
 
 function createAdminCredentials(): ICredentials {
@@ -51,7 +51,7 @@ describe('AuthService', function () {
     const eaMock = createIEventAggregatorMock();
     const ts = new AuthService(createIApiEndpointsMock(), eaMock);
     jest.spyOn(eaMock, 'publish');
-    
+
     test('should publish user profile with SS_AUTH_CHANNEL_SIGNED_IN message if user signs in successfully', async () => {
         let credentials = createAdminCredentials();
         await ts.signIn(credentials);

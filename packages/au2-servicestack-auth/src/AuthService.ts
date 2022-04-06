@@ -36,6 +36,7 @@ export interface IAuthService {
 	signOut(): Promise<void>;
 }
 
+/*istanbul ignore next*/
 export const IAuthService = DI.createInterface<IAuthService>("IAuthService", x => x.singleton(AuthService));
 
 export class AuthService implements IAuthService {
