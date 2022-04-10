@@ -1,9 +1,9 @@
 import { IContainer, IRegistry, noop } from '@aurelia/kernel';
 import { AppTask } from '@aurelia/runtime-html';
-import { ApiRegistry, IApiRegistry } from "./ApiRegistry";
+import { ApiEndpoints, IApiEndpoints } from 'ApiEndpoints';
 
 
-export const AureliaApiConfiguration = createConfiguration(noop, [ApiRegistry]);
+export const AureliaApiConfiguration = createConfiguration(noop, [ApiEndpoints]);
 
 function createConfiguration(cb: ApiRegistryConfigurator, registrations: IRegistry[]) {
 	return {
@@ -11,7 +11,7 @@ function createConfiguration(cb: ApiRegistryConfigurator, registrations: IRegist
 		register: (ctn: IContainer) => {
 			return ctn.register(
 				...registrations,
-				AppTask.beforeCreate(() => cb(ctn.get(IApiRegistry)) as void)
+				AppTask.beforeCreate(() => cb(ctn.get(IApiEndpoints)) as void)
 			);
 		},
 		configure(cb: ApiRegistryConfigurator, regs?: IRegistry[]) {
@@ -20,4 +20,4 @@ function createConfiguration(cb: ApiRegistryConfigurator, registrations: IRegist
 	};
 }
 
-export type ApiRegistryConfigurator = (settings: ApiRegistry) => void | Promise<unknown>;
+export type ApiRegistryConfigurator = (settings: IApiEndpoints) => void | Promise<unknown>;

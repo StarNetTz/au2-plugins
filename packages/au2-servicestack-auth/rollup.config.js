@@ -11,13 +11,14 @@ import html from "rollup-plugin-html";
 export default {
     input: 'src/index.ts',
     output: [{
-            file: pkg.main,
-            format: 'cjs'
-        },
+            file: `dist/index.js`,
+            format: 'cjs',
+            sourcemap: true
+        }/* ,
         {
             file: pkg.module,
             format: 'es'
-        }
+        } */
     ],
     external: [
         ...Object.keys(pkg.dependencies || {})

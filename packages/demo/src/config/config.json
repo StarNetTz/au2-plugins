@@ -1,10 +1,19 @@
 {
 	"au2-api": {
 		"authApi": {
-			"url": "https://auth.au2demo.ath.cx"
+			"url": "https://localhost:5010",
+			"auth": true
 		},
 		"lookupsApi": {
 			"url": "https://api.daas.selfip.net",
+			"auth": true
+		},
+		"jsonplaceholderApi": {
+			"url": "https://jsonplaceholder.typicode.com",
+			"auth": true
+		},
+		"securedHelloApi": {
+			"url": "https://localhost:5001",
 			"auth": true
 		}
 	}

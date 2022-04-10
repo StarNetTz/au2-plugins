@@ -1,16 +1,16 @@
 {
   "name": "@starnetbih/demo",
   "description": "An Aurelia plugin test application",
-  "version": "0.2.3",
+  "version": "0.2.6",
   "repository": {
     "type": "git",
     "url": "???"
   },
   "license": "MIT",
   "dependencies": {
-    "@starnetbih/au2-configuration": "0.2.3",
-    "@starnetbih/au2-auth": "0.2.3",
-    "@starnetbih/au2-api": "0.2.3",
+    "@starnetbih/au2-configuration": "0.2.6",
+    "@starnetbih/au2-servicestack-auth": "0.2.6",
+    "@starnetbih/au2-api": "0.2.6",
     "aurelia": "latest"
   },
   "keywords": [

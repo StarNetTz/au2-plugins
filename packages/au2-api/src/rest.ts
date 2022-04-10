@@ -7,17 +7,18 @@ export interface IRestRequest {
 	body?: {};
 	options?: {};
 	responseOutput?: { response: Response }
-
 }
-export interface IRest {
-	find(req: string | IRestRequest): Promise<any | Error>;
 
-	post(req: IRestRequest): Promise<any | Error>;
+export interface IRest {
+	find(req: string | IRestRequest): Promise<unknown | Error>;
+
+	post(req: IRestRequest): Promise<unknown | Error>;
+
 	addInterceptor(interceptor: Interceptor);
 }
 
 export class Rest implements IRest {
-	defaults: {} = {
+	defaults: RequestInit = {
 		headers: {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json'
@@ -30,30 +31,34 @@ export class Rest implements IRest {
 		this.client.interceptors.push(interceptor);
 	}
 
-	public find(req: string | IRestRequest): Promise<any | Error> {
+	public find(req: string | IRestRequest): Promise<unknown | Error> {
 		if (typeof (req) == 'string') 
 			return this.request('GET', this.getRequestPath(req, this.useTraditionalUriTemplates));
 		else 
-			return this.request('GET', this.getRequestPath(req.resource, this.useTraditionalUriTemplates, req.idOrCriteria), undefined, req.options, req.responseOutput);
+		{
+			const path = this.getRequestPath(req.resource, this.useTraditionalUriTemplates, req.idOrCriteria);
+			return this.request('GET', path , undefined, req.options, req.responseOutput);
+		}
+			
 	}
 
-	getRequestPath(resource: string, traditional: boolean, idOrCriteria?: string | number | {}, criteria?: {}) {
-		const hasSlash = resource.slice(-1) === '/';
-		if (typeof idOrCriteria === 'string' || typeof idOrCriteria === 'number') {
-			resource = `${join(resource, String(idOrCriteria))}${hasSlash ? '/' : ''}`;
-		} else {
-			criteria = idOrCriteria;
+		getRequestPath(resource: string, traditional: boolean, idOrCriteria?: string | number | {}, criteria?: {}) {
+			const hasSlash = resource.slice(-1) === '/';
+			if (typeof idOrCriteria === 'string' || typeof idOrCriteria === 'number') {
+				resource = `${join(resource, String(idOrCriteria))}${hasSlash ? '/' : ''}`;
+			} else {
+				criteria = idOrCriteria;
+			}
+
+			if (typeof criteria === 'object' && criteria !== null) {
+				resource += `?${buildQueryString(criteria, traditional)}`;
+			} else if (criteria) {
+				resource += `${hasSlash ? '' : '/'}${criteria}${hasSlash ? '/' : ''}`;
+			}
+			return resource;
 		}
 
-		if (typeof criteria === 'object' && criteria !== null) {
-			resource += `?${buildQueryString(criteria, traditional)}`;
-		} else if (criteria) {
-			resource += `${hasSlash ? '' : '/'}${criteria}${hasSlash ? '/' : ''}`;
-		}
-		return resource;
-	}
-
-	public post(req: IRestRequest): Promise<any | Error> {
+	public post(req: IRestRequest): Promise<unknown | Error> {
 		return this.request('POST', req.resource, req.body, req.options, req.responseOutput);
 	}
 

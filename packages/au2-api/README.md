@@ -10,7 +10,7 @@ au2-api is a module wrapped around HttpClient that allows you to:
 - Add interceptors
 - And more
 
-It depends on **au2-configuration** and **au2-auth** modules for configuration and authorization features.
+It depends on **au2-configuration**.
 
 **Full disclosure**: this plugin is in alpha stage. Use at your own risk.
 
@@ -27,8 +27,12 @@ import { AureliaApiConfiguration } from '@starnetbih/au2-api';
 
 /* Configure in code */
 Aurelia.register(AureliaApiConfiguration.configure(cfg => {
-        cfg.registerEndpoint('myApi1', '/mypath');
-        cfg.registerEndpoint('myApi2', '/otherpath', { headers: {'Content-Type':'x-www-form-urlencoded'}});
+        cfg.register('myApi1', '/mypath');
+        cfg.registerUsingCallback('myApi2', (cfg) => {
+           return cfg.withBaseUrl('/mypath'l)
+          },
+          { headers: {'Accept': 'application/json'}
+        );
     }));
 
 /* Or configure by convention, using au2-configuration plugin */
@@ -53,23 +57,23 @@ Make sure that your config.json used by au2-configuration plugin contains **au2-
 }
 ```
 
-au2-auth plugin takes care of adding the jwt token to all requests on endpoints with "auth" set to true.
+Setting auth to true will include credentials with requests.  
 
 ## Usage
 
 ```js
-import { IApiRegistry } from '@starnetbih/au2-api';
+import { IApiEndpoints } from '@starnetbih/au2-api';
 
 export class MyApp {
 
-    constructor(@IApiRegistry private Reg: IApiRegistry) { }
+    constructor(@IApiEndpoints private ApiEndpoints: IApiEndpoints) { }
 
     async attached() {
-         let rest = this.Reg.getEndpoint('myApi1');
-         let resp = await rest.find('/ba/entities?pageSize=10');
+         const rest = this.ApiEndpoints.get('myApi1');
+         const resp = await rest.find('/ba/entities?pageSize=10');
          console.log(resp);
 
-         let req = {
+         const req = {
             currentPage: 0,
             pageSize: 10,
             qry: {
@@ -77,7 +81,7 @@ export class MyApp {
                 "startsWith ": "Ag"
             }
         };
-        let resp2 = await rest.post({ resource: '/typeaheads', body: req });
+        const resp2 = await rest.post({ resource: '/typeaheads', body: req });
         console.log(resp2);
     }
 }

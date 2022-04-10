@@ -1,6 +1,8 @@
 import typescript from 'rollup-plugin-typescript2';
 import pkg from './package.json';
-import { terser } from 'rollup-plugin-terser';
+import {
+    terser
+} from 'rollup-plugin-terser';
 import postcss from 'rollup-plugin-postcss';
 import autoprefixer from 'autoprefixer';
 import cssnano from 'cssnano';
@@ -11,25 +13,31 @@ import html from "rollup-plugin-html";
 export default {
     input: 'src/index.ts',
     output: [{
-            file: pkg.main,
-            format: 'cjs'
-        },
+            file: `dist/index.js`,
+            format: 'cjs',
+            sourcemap: true
+        }/* ,
         {
             file: pkg.module,
             format: 'es'
-        }
+        } */
     ],
     external: [
         ...Object.keys(pkg.dependencies || {})
     ],
     plugins: [
-        typescript({ typescript: require('typescript') }),
+        typescript({
+            typescript: require('typescript')
+        }),
         postcss({
             inject: false,
             extract: false,
             plugins: [
                 autoprefixer(),
-                postcssUrl({ url: 'inline', encodeType: 'base64' }),
+                postcssUrl({
+                    url: 'inline',
+                    encodeType: 'base64'
+                }),
                 cssnano()
             ]
         }),
