@@ -24,7 +24,9 @@ export class MyApp {
     await this.testjsonplaceholderEndpoint();
     //await this.callLookupsApi();
     //await this.testManuallyConfiguredEndpoint();
-    await this.testHello5001();
+    //await this.testHello5001();
+    //await this.registerNewUser();
+    await this.testGetUserStatus();
   }
 
   public message = 'Hello World!';
@@ -84,6 +86,23 @@ export class MyApp {
 
   private async login() {
     await this.Auth.signIn({ username: "admin", password: "admin" });
+    //await this.Auth.signOut();
+    
+    //const authEndpoint = this.ApiEndpoints.get('authApi');
+		//await authEndpoint.post({  resource:'/auth/credentials', body:{username:"admin", password:"admin"}, options : {credentials:"include"}});
+    //const resp2 = await authEndpoint.find({  resource:'/users', options : {credentials:"include"}}) as any;
+  }
+
+  private async testGetUserStatus() {
+    const resp = await this.Auth.getStatus('zeko77@gmail.com');
+    console.log(resp);
+  }
+
+  private async registerNewUser() {
+    console.log('aaa');
+    await this.Auth.signOut();
+    await this.Auth.register({ displayName:'Semir', email: "semir@mail.com", password: "admin", confirmPassword: "admin", autoLogin:true });
+    
     //await this.Auth.signOut();
     
     //const authEndpoint = this.ApiEndpoints.get('authApi');
