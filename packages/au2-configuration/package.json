@@ -1,6 +1,6 @@
 {
     "name": "@starnetbih/au2-configuration",
-    "version": "0.2.6",
+    "version": "0.2.9",
     "description": "Configuration (app settings) plugin for aurelia 2 (alpha)",
     "main": "dist/index.js",
     "module": "dist/index.js",
