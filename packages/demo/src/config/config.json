@@ -13,7 +13,7 @@
 			"auth": true
 		},
 		"securedHelloApi": {
-			"url": "https://localhost:5001",
+			"url": "http://127.0.0.1:5005",
 			"auth": true
 		}
 	}
