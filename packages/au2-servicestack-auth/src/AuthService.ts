@@ -16,6 +16,7 @@ export interface IUserProfile {
 	sessionId: string;
 	roles: string[];
 	permissions: string[];
+	bearerToken: string;
 }
 
 export interface IServiceAuthStackResponse {
@@ -27,7 +28,8 @@ export interface IServiceAuthStackResponse {
 	roles: string[];
 	permissions: string[];
 	profileUrl: string;
-	meta:Map<string,string>
+	meta: Map<string, string>;
+	bearerToken: string
 }
 
 export interface IRegisterUserRequest {
@@ -36,22 +38,22 @@ export interface IRegisterUserRequest {
 	lastName?: string;
 	displayName?: string;
 	email?: string;
-    password?: string;
-    confirmPassword?: string;
-	meta?:Map<string,string>;
+	password?: string;
+	confirmPassword?: string;
+	meta?: Map<string, string>;
 	errorView?: string;
 	autoLogin?: boolean;
 }
 
 export interface IUserStatus {
-	exists:boolean;
+	exists: boolean;
 }
 
 export interface IAuthService {
 	signIn(credentials: Partial<ICredentials>): Promise<void>;
 	signOut(): Promise<void>;
 	register(req: IRegisterUserRequest): Promise<void>;
-	getStatus(usernameOrEmail:string): Promise<IUserStatus>;
+	getStatus(usernameOrEmail: string): Promise<IUserStatus>;
 
 }
 
@@ -67,14 +69,15 @@ export class AuthService implements IAuthService {
 	async register(req: IRegisterUserRequest): Promise<void> {
 		const api = this.ApiEndpoints.get('authApi');
 		const resp = await api.post({ resource: '/register', body: req }) as IServiceAuthStackResponse;
-		const profile : IUserProfile = {
-			userId: resp.userId, 
+		const profile: IUserProfile = {
+			userId: resp.userId,
 			userName: resp.userName,
 			sessionId: resp.sessionId,
 			displayName: req.displayName,
 			email: resp.meta["email"],
 			roles: resp.roles,
-			permissions: resp.permissions
+			permissions: resp.permissions,
+			bearerToken: resp.bearerToken
 		}
 		this.EA.publish(SS_AUTH_CHANNEL_SIGNED_IN, profile);
 	}
@@ -82,14 +85,15 @@ export class AuthService implements IAuthService {
 	async signIn(credentials: Partial<ICredentials>) {
 		const api = this.ApiEndpoints.get('authApi');
 		const resp = await api.post({ resource: '/auth/credentials', body: credentials }) as IServiceAuthStackResponse;
-		const profile : IUserProfile = {
-			userId: resp.userId, 
+		const profile: IUserProfile = {
+			userId: resp.userId,
 			userName: resp.userName,
 			sessionId: resp.sessionId,
 			displayName: resp.displayName,
 			email: resp.meta["email"],
 			roles: resp.roles,
-			permissions: resp.permissions
+			permissions: resp.permissions,
+			bearerToken: resp.bearerToken
 		}
 		this.EA.publish(SS_AUTH_CHANNEL_SIGNED_IN, profile);
 	}
@@ -100,9 +104,9 @@ export class AuthService implements IAuthService {
 		this.EA.publish(SS_AUTH_CHANNEL_SIGNED_OUT, resp);
 	}
 
-	async getStatus(usernameOrEmail:string): Promise<IUserStatus> {
+	async getStatus(usernameOrEmail: string): Promise<IUserStatus> {
 		const api = this.ApiEndpoints.get('authApi');
-		const resp = await api.find({ resource: '/user',  idOrCriteria:{ usernameOrEmail:usernameOrEmail} }) as IUserStatus;
+		const resp = await api.find({ resource: '/user', idOrCriteria: { usernameOrEmail: usernameOrEmail } }) as IUserStatus;
 		return resp;
 	}
 }

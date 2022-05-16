@@ -54,6 +54,15 @@ export class ApiEndpoints implements IApiEndpoints {
 					plugin.registerUsingCallback(key, (cfg) => {
 						return cfg
 							.withBaseUrl(cnf[key].url)
+							.withInterceptor({
+								request(request) {
+									const tok = window.localStorage.getItem('jwt');
+									if (tok) {
+										request.headers.append('Authorization', tok);
+									}
+									return request;
+								}
+							})
 					}, this.defaultAuthClientOptions);
 				}
 				else
@@ -66,7 +75,7 @@ export class ApiEndpoints implements IApiEndpoints {
 		headers: {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json'
-		}, 
+		},
 		credentials: "include"
 	};
 }

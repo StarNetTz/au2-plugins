@@ -2,17 +2,22 @@ import { IAureliaConfiguration } from '@starnetbih/au2-configuration';
 import { IApiEndpoints } from '@starnetbih/au2-api';
 import { IAuthService, IUserProfile, SS_AUTH_CHANNEL_SIGNED_IN, SS_AUTH_CHANNEL_SIGNED_OUT } from '@starnetbih/au2-servicestack-auth';
 import { IEventAggregator } from 'aurelia';
+import { IWindow } from '@aurelia/runtime-html';
 
 export class MyApp {
   constructor(
     @IAureliaConfiguration private Configuration: IAureliaConfiguration,
     @IAuthService private Auth: IAuthService,
     @IEventAggregator readonly EventAggregator: IEventAggregator,
-    @IApiEndpoints private ApiEndpoints: IApiEndpoints
+    @IApiEndpoints private ApiEndpoints: IApiEndpoints,
+    @IWindow readonly w: IWindow
   ) {
     this.EventAggregator.subscribe(SS_AUTH_CHANNEL_SIGNED_IN, (usr) => {
-      console.log(`${(usr as IUserProfile).displayName} signed in!`);
+      const u = usr as IUserProfile;
+      console.log('jjj');
+      console.log(`${(u).displayName} signed in!`);
       console.log(usr);
+      this.w.localStorage.setItem('jwt',`Bearer ${u.bearerToken}`);
     });
     this.EventAggregator.subscribe(SS_AUTH_CHANNEL_SIGNED_OUT, () => {
       console.log('User signed out');
@@ -20,13 +25,14 @@ export class MyApp {
   }
 
   async attached() {
+ 
     await this.login();
-    await this.testjsonplaceholderEndpoint();
+    //await this.testjsonplaceholderEndpoint();
     //await this.callLookupsApi();
     //await this.testManuallyConfiguredEndpoint();
-    //await this.testHello5001();
+    await this.testHello5001();
     //await this.registerNewUser();
-    await this.testGetUserStatus();
+    //await this.testGetUserStatus();
   }
 
   public message = 'Hello World!';
