@@ -1,7 +1,7 @@
 {
 	"au2-api": {
 		"authApi": {
-			"url": "https://localhost:5010",
+			"url": "https://auth.au2demo.ath.cx",
 			"auth": true
 		},
 		"lookupsApi": {
