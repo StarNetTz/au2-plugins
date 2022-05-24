@@ -17,7 +17,7 @@ export class MyApp {
       console.log('jjj');
       console.log(`${(u).displayName} signed in!`);
       console.log(usr);
-      this.w.localStorage.setItem('jwt',`Bearer ${u.bearerToken}`);
+      //this.w.localStorage.setItem('jwt',`Bearer ${u.bearerToken}`);
     });
     this.EventAggregator.subscribe(SS_AUTH_CHANNEL_SIGNED_OUT, () => {
       console.log('User signed out');
@@ -91,7 +91,8 @@ export class MyApp {
   }
 
   private async login() {
-    await this.Auth.signIn({ username: "admin", password: "admin" });
+    await this.Auth.signOut();
+    await this.Auth.signIn({ username: "zeko77@gmail.com", password: "123asdA!" });
     //await this.Auth.signOut();
     
     //const authEndpoint = this.ApiEndpoints.get('authApi');

@@ -34,7 +34,33 @@ module.exports = function(env, { analyze }) {
     },
     resolve: {
       extensions: ['.ts', '.js'],
-      modules: [path.resolve(__dirname, 'src'), path.resolve(__dirname, 'dev-app'), 'node_modules']
+      modules: [path.resolve(__dirname, 'src'), path.resolve(__dirname, 'dev-app'), 'node_modules'],
+      alias: production ? {
+        // add your production aliasing here
+      } : {
+        ...[
+          'fetch-client',
+          'kernel',
+          'metadata',
+          'platform',
+          'platform-browser',
+          'plugin-conventions',
+          'route-recognizer',
+          'router',
+          'router-lite',
+          'runtime',
+          'runtime-html',
+          'testing',
+          'webpack-loader',
+        ].reduce((map, pkg) => {
+          const name = `@aurelia/${pkg}`;
+          map[name] = path.resolve(__dirname, '../../node_modules', name, 'dist/esm/index.dev.mjs');
+          return map;
+        }, {
+          'aurelia': path.resolve(__dirname, '../../node_modules/aurelia/dist/esm/index.dev.mjs'),
+          // add your development aliasing here
+        })
+      }
     },
     devServer: {
       historyApiFallback: true,
