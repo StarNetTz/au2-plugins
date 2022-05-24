@@ -1,7 +1,7 @@
 {
 	"au2-api": {
 		"authApi": {
-			"url": "https://auth.au2demo.ath.cx",
+			"url": "https://ankoe.ath.cx",
 			"auth": true
 		},
 		"lookupsApi": {
@@ -13,7 +13,7 @@
 			"auth": true
 		},
 		"securedHelloApi": {
-			"url": "https://localhost:5005",
+			"url": "https://api.ankoe.ath.cx",
 			"auth": true
 		}
 	}
