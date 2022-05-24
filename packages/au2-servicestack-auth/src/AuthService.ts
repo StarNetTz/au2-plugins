@@ -16,7 +16,6 @@ export interface IUserProfile {
 	sessionId: string;
 	roles: string[];
 	permissions: string[];
-	bearerToken: string;
 }
 
 export interface IServiceAuthStackResponse {
@@ -29,7 +28,6 @@ export interface IServiceAuthStackResponse {
 	permissions: string[];
 	profileUrl: string;
 	meta: Map<string, string>;
-	bearerToken: string
 }
 
 export interface IRegisterUserRequest {
@@ -76,8 +74,7 @@ export class AuthService implements IAuthService {
 			displayName: req.displayName,
 			email: resp.meta["email"],
 			roles: resp.roles,
-			permissions: resp.permissions,
-			bearerToken: resp.bearerToken
+			permissions: resp.permissions
 		}
 		this.EA.publish(SS_AUTH_CHANNEL_SIGNED_IN, profile);
 	}
@@ -92,8 +89,7 @@ export class AuthService implements IAuthService {
 			displayName: resp.displayName,
 			email: resp.meta["email"],
 			roles: resp.roles,
-			permissions: resp.permissions,
-			bearerToken: resp.bearerToken
+			permissions: resp.permissions
 		}
 		this.EA.publish(SS_AUTH_CHANNEL_SIGNED_IN, profile);
 	}
