@@ -16,7 +16,7 @@ export const AureliaConfigurationConfiguration = createAureliaConfiguration({});
 				return container.register(
 					Registration.instance(IAureliaConfigurationOptions, mergedOptions),
 					Registration.singleton(IAureliaConfiguration, AureliaConfiguration),
-					AppTask.beforeCreate(IAureliaConfiguration, async plugin => {
+					AppTask.creating(IAureliaConfiguration, async plugin => {
 						await plugin.init();
 					})
 				);

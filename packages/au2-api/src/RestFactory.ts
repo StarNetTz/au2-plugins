@@ -1,6 +1,6 @@
 import { HttpClient, HttpClientConfiguration} from '@aurelia/fetch-client';
 import { DI } from 'aurelia';
-import { IRest, Rest } from 'Rest';
+import { IRest, Rest } from 'rest';
 
 
 export interface IRestFactory

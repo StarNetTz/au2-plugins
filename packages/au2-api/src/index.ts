@@ -1,3 +1,3 @@
-export * from './Rest';
+export * from './rest';
 export * from './AureliaApiConfiguration';
 export * from './ApiEndpoints';

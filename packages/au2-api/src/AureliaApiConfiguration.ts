@@ -11,7 +11,7 @@ function createConfiguration(cb: ApiRegistryConfigurator, registrations: IRegist
 		register: (ctn: IContainer) => {
 			return ctn.register(
 				...registrations,
-				AppTask.beforeCreate(() => cb(ctn.get(IApiEndpoints)) as void)
+				AppTask.creating(() => cb(ctn.get(IApiEndpoints)) as void)
 			);
 		},
 		configure(cb: ApiRegistryConfigurator, regs?: IRegistry[]) {

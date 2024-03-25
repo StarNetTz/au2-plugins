@@ -28,7 +28,7 @@ async function getCredentialsMock() {
 
 function createIRestMock() {
     const testMock = stubInterface<IRest>();
-    let credentials = getCredentialsMock();
+    const credentials = getCredentialsMock();
     testMock.post.returns(credentials);
     testMock.find.returns(credentials);
     return testMock;
@@ -53,7 +53,7 @@ describe('AuthService', function () {
     jest.spyOn(eaMock, 'publish');
 
     test('should publish user profile with SS_AUTH_CHANNEL_SIGNED_IN message if user signs in successfully', async () => {
-        let credentials = createAdminCredentials();
+        const credentials = createAdminCredentials();
         await ts.signIn(credentials);
         const expectedUserProfileResponse: IUserProfile = {
             userId: "1",
@@ -62,8 +62,7 @@ describe('AuthService', function () {
             email: "john@doe.com",
             sessionId: "1",
             roles: ["admin"],
-            permissions: ["admin"],
-            image: "img"
+            permissions: ["admin"]
         }
         expect(eaMock.publish).toBeCalledWith(SS_AUTH_CHANNEL_SIGNED_IN, expectedUserProfileResponse);
     });

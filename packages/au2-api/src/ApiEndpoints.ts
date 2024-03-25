@@ -1,5 +1,5 @@
 import { HttpClientConfiguration } from '@aurelia/fetch-client';
-import { IRest } from './Rest';
+import { IRest } from './rest';
 import { IContainer, Registration, DI } from '@aurelia/kernel';
 import { AppTask } from '@aurelia/runtime-html';
 import { IAureliaConfiguration } from '@starnetbih/au2-configuration';
@@ -40,7 +40,7 @@ export class ApiEndpoints implements IApiEndpoints {
 	public static register(container: IContainer): void {
 		container.register(Registration.singleton(IApiEndpoints, this));
 		container.register(
-			AppTask.beforeActivate(IApiEndpoints, async plugin => {
+			AppTask.activating(IApiEndpoints, async plugin => {
 				await ApiEndpoints.RegisterFromConfigFile(container, plugin);
 			}));
 	}
